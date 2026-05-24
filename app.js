@@ -308,6 +308,18 @@ function dishIngs(item) {
   return `<div class="ings">${ings.slice(0, 6).join(" · ")}</div>`;
 }
 
+const SOURCE_LABELS = {
+  chefandherkitchen: { name: "The Chef and Her Kitchen", url: "http://www.chefandherkitchen.com" },
+  hebbarskitchen:    { name: "Hebbar's Kitchen",         url: "https://hebbarskitchen.com" },
+};
+
+function dishSource(item) {
+  if (!item.src) return "";
+  const s = SOURCE_LABELS[item.src];
+  if (!s) return "";
+  return `<div class="src">via <a href="${s.url}" target="_blank" rel="noopener">${s.name}</a></div>`;
+}
+
 function renderSlotsList(picks, dayIdx) {
   let html = "";
   SLOTS.forEach((s, i) => {
@@ -335,6 +347,7 @@ function renderSlotsList(picks, dayIdx) {
           <div class="dish">${item.n}${soakBadge}</div>
           <div class="meta">${dishMeta(item)}</div>
           ${dishIngs(item)}
+          ${dishSource(item)}
         </div>
         <button class="reroll" ${rerollAttr}>
           <span class="icon">↻</span> swap

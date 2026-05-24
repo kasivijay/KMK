@@ -8,7 +8,7 @@
 const VEG_OPTIONS = [
   "spinach","cauliflower","bell pepper","methi","bhindi","mushroom",
   "broccoli","eggplant","karela","drumstick","tinda","zucchini",
-  "gawar","ridge gourd","pumpkin","beetroot","radish",
+  "gawar","ridge gourd","pumpkin","beetroot","radish","gongura","arbi",
   "_more_",
   "potato","peas","carrot","cabbage","lauki","sweet potato",
   "sweetcorn","cucumber","tomato","onion","garlic","beans"
@@ -27,6 +27,8 @@ const PULSE_OPTIONS = [
 ];
 
 /* Each item:
+     src      - optional source attribution ("chefandherkitchen", "hebbarskitchen")
+                — omitted = original menu from the family's home spreadsheet
      n        - display name
      slot     - breakfast | tiffin | lunch | snack | dinner
      cuisine  - Indian | Asian | Mexican | Italian | Continental
@@ -441,6 +443,68 @@ const MENU = [
     veg:["tomato","cucumber"], grain:["wheat"], pulse:[] },
   { n:"Stuffed Zucchini (Baked)", slot:"dinner", cuisine:"Continental", dairy:"light", protein:"low",
     veg:["zucchini","bell pepper"], grain:["rice"], pulse:[] },
+
+  /* ============================================================
+     Additions from external recipe blogs
+     ============================================================ */
+
+  // -- From The Chef and Her Kitchen (Prathibha, Andhra/Karnataka veg)
+  { n:"Ven Pongal (Ghee Pongal)", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:[], grain:["rice"], pulse:["moong dal"], src:"chefandherkitchen" },
+  { n:"Davanagere Benne Dosa", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:["potato","onion"], grain:["rice"], pulse:["urad"], soak:true, src:"chefandherkitchen" },
+  { n:"Sagu Masala Dosa", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["carrot","beans","peas","potato"], grain:["rice"], pulse:["urad"], soak:true, src:"chefandherkitchen" },
+  { n:"Erra Kaaram Dosa (Rayalaseema)", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["onion"], grain:["rice"], pulse:["urad"], soak:true, src:"chefandherkitchen" },
+  { n:"Kharada Eerulli Dosa", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["onion"], grain:["rice"], pulse:["urad","chana dal"], soak:true, src:"chefandherkitchen" },
+  { n:"Gongura Pappu + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["gongura"], grain:["rice"], pulse:["toor dal"], src:"chefandherkitchen" },
+  { n:"Gongura Pacchadi + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["gongura"], grain:["rice"], pulse:[], src:"chefandherkitchen" },
+  { n:"Chamadumpa Vepudu (Arbi Roast) + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["arbi"], grain:["rice"], pulse:[], src:"chefandherkitchen" },
+  { n:"Arbi Salan + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["arbi","tomato"], grain:["wheat"], pulse:[], src:"chefandherkitchen" },
+  { n:"Drumstick Tomato Curry + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["drumstick","tomato"], grain:["rice"], pulse:[], src:"chefandherkitchen" },
+  { n:"Andhra Potato Kurma + Roti", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["potato","onion"], grain:["wheat"], pulse:[], src:"chefandherkitchen" },
+  { n:"Holige Saaru (Toor Dal Rasam) + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["tomato"], grain:["rice"], pulse:["toor dal"], src:"chefandherkitchen" },
+  { n:"Whole Green Moong (Hara Moong) + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:["wheat"], pulse:["moong dal"], src:"chefandherkitchen" },
+  { n:"Sambar Sadam (Kadambam Rice)", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"high",
+    veg:["carrot","beans","drumstick"], grain:["rice"], pulse:["toor dal"], src:"chefandherkitchen" },
+  { n:"Pacchi Pulusu + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["onion","tomato"], grain:["rice"], pulse:[], src:"chefandherkitchen" },
+  { n:"Stuffed Karela + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["karela","onion"], grain:["wheat"], pulse:["besan"], src:"chefandherkitchen" },
+  { n:"Tomato Gotsu + Dosa", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["onion","tomato"], grain:["rice"], pulse:["moong dal","urad"], soak:true, src:"chefandherkitchen" },
+
+  // -- From Hebbar's Kitchen (Archana, modern South Indian + pan-Indian veg)
+  { n:"Khara Bath (Rava Masala Bath)", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["onion","peas","carrot","tomato"], grain:["rava"], pulse:[], src:"hebbarskitchen" },
+  { n:"Tiffin Sambar + Idli", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["carrot","beans","drumstick"], grain:["rice"], pulse:["toor dal","urad"], soak:true, src:"hebbarskitchen" },
+  { n:"Badanekayi Palya + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["eggplant"], grain:["rice"], pulse:[], src:"hebbarskitchen" },
+  { n:"Rice Bath (Karnataka Veg Bath)", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:["carrot","beans","peas"], grain:["rice"], pulse:[], src:"hebbarskitchen" },
+  { n:"Tomato Bath", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["tomato","onion"], grain:["rice"], pulse:[], src:"hebbarskitchen" },
+  { n:"Vangi Bath (Brinjal Rice)", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["eggplant"], grain:["rice"], pulse:[], src:"hebbarskitchen" },
+  { n:"Masale Bhat (Maharashtrian)", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:["carrot","peas","potato","eggplant"], grain:["rice"], pulse:[], src:"hebbarskitchen" },
+  { n:"Paneer Pulao", slot:"lunch", cuisine:"Indian", dairy:"heavy", protein:"high",
+    veg:["onion","peas"], grain:["rice"], pulse:["paneer"], src:"hebbarskitchen" },
+  { n:"Dahi Puri", slot:"snack", cuisine:"Indian", dairy:"heavy", protein:"low",
+    veg:["potato","onion","tomato"], grain:[], pulse:[], src:"hebbarskitchen" },
+  { n:"Aloo Matar Chaat (Delhi)", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["potato","peas","onion","tomato"], grain:[], pulse:[], src:"hebbarskitchen" },
 ];
 
 const SLOTS = [

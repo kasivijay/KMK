@@ -320,6 +320,34 @@ function dishSource(item) {
   return `<div class="src">via <a href="${s.url}" target="_blank" rel="noopener">${s.name}</a></div>`;
 }
 
+/* Recipe URL resolution.
+   - If the item has its own `url`, use that.
+   - Else if the item has `src`, do a site-scoped Google search of that blog.
+   - Else (original items): route by cuisine. Indian dishes search the
+     Andhra/Karnataka home-cooking sources. Global cuisines (Italian /
+     Mexican / Asian / Continental) search Indian chefs who do global
+     adaptations — Sanjeev Kapoor and Ranveer Brar. */
+function searchQuery(item) {
+  // Strip "+ Roti / + Rice / (variant)" suffixes for cleaner search
+  return item.n.split(/\s*[+(/]/)[0].trim();
+}
+
+function recipeUrl(item) {
+  if (item.url) return item.url;
+  const q = encodeURIComponent(searchQuery(item));
+  if (item.src === "chefandherkitchen") {
+    return `https://www.google.com/search?q=site%3Achefandherkitchen.com+${q}`;
+  }
+  if (item.src === "hebbarskitchen") {
+    return `https://www.google.com/search?q=site%3Ahebbarskitchen.com+${q}`;
+  }
+  if (item.cuisine === "Indian") {
+    return `https://www.google.com/search?q=${q}+recipe+(site%3Achefandherkitchen.com+OR+site%3Ahebbarskitchen.com+OR+site%3Aindianhealthyrecipes.com)`;
+  }
+  // Global cuisines — Indian chefs adapting global dishes
+  return `https://www.google.com/search?q=${q}+recipe+(%22Sanjeev+Kapoor%22+OR+%22Ranveer+Brar%22)`;
+}
+
 function renderSlotsList(picks, dayIdx) {
   let html = "";
   SLOTS.forEach((s, i) => {
@@ -349,9 +377,14 @@ function renderSlotsList(picks, dayIdx) {
           ${dishIngs(item)}
           ${dishSource(item)}
         </div>
-        <button class="reroll" ${rerollAttr}>
-          <span class="icon">↻</span> swap
-        </button>
+        <div class="slot-actions">
+          <a class="recipe-btn" href="${recipeUrl(item)}" target="_blank" rel="noopener">
+            Recipe →
+          </a>
+          <button class="reroll" ${rerollAttr}>
+            <span class="icon">↻</span> swap
+          </button>
+        </div>
       </div>`;
   });
   return html;

@@ -422,16 +422,30 @@
   .slot .src a { color: var(--terracotta); text-decoration: none;
     border-bottom: 1px dashed var(--terracotta-soft); }
   .slot .src a:hover { border-bottom-color: var(--terracotta); }
-  .slot .reroll {
+  .slot .slot-actions {
+    display: flex; flex-direction: column; gap: 6px; align-items: stretch;
+  }
+  .slot .reroll, .slot .recipe-btn {
     background: transparent; border: 1px solid var(--line);
     border-radius: 10px; color: var(--terracotta);
     font-size: 11px; cursor: pointer; padding: 7px 11px;
     white-space: nowrap; font-weight: 600;
-    display: inline-flex; align-items: center; gap: 5px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
     font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em;
     text-transform: uppercase; transition: all .12s ease;
+    text-decoration: none;
   }
-  .slot .reroll:hover { border-color: var(--terracotta); background: var(--terracotta-soft); }
+  .slot .reroll:hover, .slot .recipe-btn:hover {
+    border-color: var(--terracotta); background: var(--terracotta-soft);
+  }
+  .slot .recipe-btn {
+    background: var(--terracotta); color: #fff;
+    border-color: var(--terracotta);
+  }
+  .slot .recipe-btn:hover {
+    background: var(--terracotta-2); border-color: var(--terracotta-2);
+    color: #fff;
+  }
   .slot .reroll .icon { display: inline-block; transition: transform .3s ease; }
   .slot .reroll:hover .icon { transform: rotate(180deg); }
   .slot .empty { color: var(--muted); font-style: italic; font-size: 14px;
@@ -522,7 +536,7 @@
     h1 { font-size: 44px; }
     .card { padding: 18px 16px 16px; }
     .slot { grid-template-columns: 36px 1fr; }
-    .slot .reroll { grid-column: 2; justify-self: start; margin-top: 6px; }
+    .slot .slot-actions { grid-column: 2; flex-direction: row; justify-content: flex-start; margin-top: 6px; }
     .menu-head { padding: 22px 18px 18px; }
     .menu-head h2 { font-size: 26px; }
     .slots { padding: 4px 18px 18px; }
@@ -601,7 +615,7 @@
   </div>
 
   <div class="cta-block">
-    <button class="btn" id="shuffle">Plan tomorrow's menu <span class="arrow">→</span></button>
+    <button class="btn" id="shuffle">I feel relieved <span class="arrow">→</span></button>
     <div class="btn-row">
       <button class="btn secondary" id="reset">Clear all</button>
     </div>

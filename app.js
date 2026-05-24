@@ -21,6 +21,60 @@ let current = {};     // single-day pick:  slot -> item
 let multiDay = [];    // 3-day mode: array of { dateLabel, dateMono, picks }
 
 /* ============================================================
+   RATINGS  (persisted in localStorage)
+   Shape: { "Dish name": "like" | "skip" }
+   Liked dishes get a strong score boost. Skipped dishes are filtered
+   out unless the rest of the pool is empty.
+   ============================================================ */
+const RATINGS_KEY = "kmk:ratings:v1";
+const RATINGS = (() => {
+  try { return JSON.parse(localStorage.getItem(RATINGS_KEY) || "{}"); }
+  catch { return {}; }
+})();
+
+function saveRatings() {
+  try { localStorage.setItem(RATINGS_KEY, JSON.stringify(RATINGS)); }
+  catch {}
+}
+
+function setRating(dishName, value) {
+  // Tapping the same rating again clears it (toggle)
+  if (RATINGS[dishName] === value) delete RATINGS[dishName];
+  else RATINGS[dishName] = value;
+  saveRatings();
+}
+
+function ratingCounts() {
+  let liked = 0, skipped = 0;
+  for (const k in RATINGS) {
+    if (RATINGS[k] === "like") liked++;
+    else if (RATINGS[k] === "skip") skipped++;
+  }
+  return { liked, skipped };
+}
+
+function clearAllRatings() {
+  for (const k in RATINGS) delete RATINGS[k];
+  saveRatings();
+}
+
+function updateFeedbackSummary() {
+  const rc = ratingCounts();
+  const block = document.querySelector('.feedback-summary');
+  if (rc.liked === 0 && rc.skipped === 0) {
+    if (block) block.remove();
+    return;
+  }
+  if (!block) {
+    // Re-render result to bring the summary in
+    if (!document.getElementById('result').classList.contains('hidden')) renderResult();
+    return;
+  }
+  block.querySelector('.fb-like').textContent = `♥ ${rc.liked} liked`;
+  block.querySelector('.fb-skip').textContent = `✕ ${rc.skipped} skipped`;
+}
+
+/* ============================================================
    MOOD PRESETS (new)
    Each preset configures cuisine + free-text. Tap toggles.
    ============================================================ */
@@ -199,6 +253,7 @@ function passesHard(item, t) {
   if (t.noRice && (item.grain || []).includes("rice")) return false;
   if (t.noWheat && (item.grain || []).includes("wheat")) return false;
   if (t.light && item.dairy === "heavy") return false;
+  if (RATINGS[item.n] === "skip") return false;        // filter out skipped dishes
   return true;
 }
 
@@ -218,6 +273,9 @@ function score(item, slotKey, t) {
   if (t.southIndian && /dosa|idly|idli|rasam|sambar|pongal|upma|appam/i.test(item.n)) s += 4;
   if (t.northIndian && /roti|paratha|paneer|chhole|rajma|kati|dal makhani|biryani/i.test(item.n)) s += 4;
   if (t.light && /soup|khichdi|rasam|porridge|fruit|salad/i.test(item.n)) s += 2;
+
+  // Liked dishes get a strong boost — but soft, not absolute.
+  if (RATINGS[item.n] === "like") s += 5;
   return s;
 }
 
@@ -242,7 +300,10 @@ function pickForSlot(slotKey, t, excludeNames = []) {
     .map(m => ({ item: m, s: score(m, slotKey, t) }))
     .filter(x => x.s >= 0);
   if (!candidates.length) {
-    const loose = MENU.filter(m => m.slot === slotKey && !ex.has(m.n));
+    // First fallback: drop the chosen-already filter, keep the skipped filter.
+    let loose = MENU.filter(m => m.slot === slotKey && !ex.has(m.n) && RATINGS[m.n] !== "skip");
+    // Last-resort: ignore skips too, so we always return something.
+    if (!loose.length) loose = MENU.filter(m => m.slot === slotKey && !ex.has(m.n));
     if (!loose.length) return null;
     return loose[Math.floor(Math.random() * loose.length)];
   }
@@ -320,6 +381,19 @@ function dishSource(item) {
   return `<div class="src">via <a href="${s.url}" target="_blank" rel="noopener">${s.name}</a></div>`;
 }
 
+function dishRating(item) {
+  const r = RATINGS[item.n];
+  return `
+    <div class="rate" data-dish="${item.n.replace(/"/g, '&quot;')}">
+      <button class="rate-btn ${r === 'like' ? 'on like' : ''}" data-act="like" aria-label="Liked">
+        <span class="rate-icon">♥</span> Liked
+      </button>
+      <button class="rate-btn ${r === 'skip' ? 'on skip' : ''}" data-act="skip" aria-label="Not for me">
+        <span class="rate-icon">✕</span> Not for me
+      </button>
+    </div>`;
+}
+
 /* Recipe URL resolution.
    - If the item has its own `url`, use that.
    - Else if the item has `src`, do a site-scoped Google search of that blog.
@@ -376,6 +450,7 @@ function renderSlotsList(picks, dayIdx) {
           <div class="meta">${dishMeta(item)}</div>
           ${dishIngs(item)}
           ${dishSource(item)}
+          ${dishRating(item)}
         </div>
         <div class="slot-actions">
           <a class="recipe-btn" href="${recipeUrl(item)}" target="_blank" rel="noopener">
@@ -446,6 +521,20 @@ function renderResult() {
     });
   }
 
+  // Feedback summary footer
+  const rc = ratingCounts();
+  if (rc.liked || rc.skipped) {
+    inner += `
+      <div class="feedback-summary">
+        <div class="fb-counts">
+          <span class="fb-like">♥ ${rc.liked} liked</span>
+          <span class="fb-sep">·</span>
+          <span class="fb-skip">✕ ${rc.skipped} skipped</span>
+        </div>
+        <button class="fb-clear" id="fb-clear-btn">Clear all ratings</button>
+      </div>`;
+  }
+
   result.innerHTML = inner;
 
   // Wire up rerolls
@@ -454,6 +543,33 @@ function renderResult() {
     const day = b.dataset.day;
     b.onclick = () => rerollSlot(slot, day === undefined ? null : Number(day));
   });
+
+  // Wire up rating buttons (event delegation per rate row)
+  result.querySelectorAll('.rate').forEach(row => {
+    const dish = row.dataset.dish;
+    row.querySelectorAll('.rate-btn').forEach(btn => {
+      btn.onclick = () => {
+        setRating(dish, btn.dataset.act);
+        // Update visual state in place — both buttons in this row
+        const cur = RATINGS[dish];
+        row.querySelectorAll('.rate-btn').forEach(b => {
+          b.classList.remove('on', 'like', 'skip');
+          if (cur && b.dataset.act === cur) b.classList.add('on', cur);
+        });
+        // Refresh the feedback summary line at the bottom
+        updateFeedbackSummary();
+      };
+    });
+  });
+
+  // Wire up "Clear all ratings"
+  const clearBtn = document.getElementById('fb-clear-btn');
+  if (clearBtn) clearBtn.onclick = () => {
+    if (!confirm('Clear all dish ratings? This cannot be undone.')) return;
+    clearAllRatings();
+    // Re-render so chips reset visually
+    renderResult();
+  };
 
   // Smooth scroll into view (avoid scrollIntoView — known to misbehave)
   setTimeout(() => {

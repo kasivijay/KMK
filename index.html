@@ -6,162 +6,555 @@
 <title>Kasi Family — Khane mein kya?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  /* =========================================================
+     TOKENS — warm spice palette
+     ========================================================= */
   :root {
-    --bg: #fbf6ee;
-    --bg-2: #f3ead8;
-    --card: #ffffff;
-    --ink: #1f1b16;
-    --ink-2: #4a4439;
-    --muted: #837a6b;
-    --line: #ead9bc;
-    --line-2: #f2e7d0;
-    --accent: #a04a1f;
-    --accent-2: #c25e29;
-    --accent-soft: #fbe3cf;
-    --warn: #9b2c2c;
-    --warn-soft: #fde2dc;
-    --ok: #2f6b3a;
-    --ok-soft: #e0f0e2;
+    --bg: #faf3e6;
+    --bg-deep: #f3e6c8;
+    --paper: #ffffff;
+    --paper-warm: #fffaf0;
+    --ink: #1c1611;
+    --ink-2: #3d322a;
+    --ink-3: #6b5c4d;
+    --muted: #95836e;
+    --line: #ead8b6;
+    --line-2: #f3e6c8;
+    --line-strong: #d8c08b;
+    --terracotta: #b3411d;
+    --terracotta-2: #d35a2a;
+    --terracotta-soft: #fadcc8;
+    --saffron: #d99417;
+    --saffron-soft: #fce6b3;
+    --herb: #5d7a3a;
+    --herb-soft: #dee8c5;
+    --plum: #6b3a4f;
+    --plum-soft: #e7d4dd;
+    --night: #1d1a2e;
+    --night-2: #2a2640;
+    --moon: #f6c25c;
+
+    --r-sm: 8px;
+    --r-md: 12px;
+    --r-lg: 18px;
+    --r-xl: 24px;
+
+    --shadow-1: 0 1px 0 rgba(28,22,17,0.04), 0 1px 2px rgba(28,22,17,0.04);
+    --shadow-2: 0 2px 0 rgba(28,22,17,0.04), 0 8px 24px -12px rgba(28,22,17,0.18);
   }
+
+  /* Mint palette tweak */
+  body[data-palette="mint"] {
+    --bg: #f0f5ed;
+    --bg-deep: #d9e6d1;
+    --line: #c5d9b8;
+    --line-2: #e1ecd6;
+    --line-strong: #a9c096;
+    --terracotta: #2e6648;
+    --terracotta-2: #4a8861;
+    --terracotta-soft: #d8ebd9;
+    --saffron: #c89238;
+    --saffron-soft: #f4e0b8;
+    --herb: #4a7036;
+    --herb-soft: #d5e3c4;
+  }
+  /* Sunset palette tweak */
+  body[data-palette="sunset"] {
+    --bg: #fbeee4;
+    --bg-deep: #f6d9c2;
+    --terracotta: #c43a3f;
+    --terracotta-2: #e25758;
+    --terracotta-soft: #fbd7d9;
+    --saffron: #e2811b;
+    --saffron-soft: #fbd9a8;
+    --herb: #7a4a6c;
+    --herb-soft: #ead5e2;
+  }
+
+  /* =========================================================
+     RESET + BASE
+     ========================================================= */
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased; }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 18px 100px; }
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 50% -200px, var(--bg-deep) 0%, transparent 70%),
+      var(--bg);
+    min-height: 100vh;
+  }
+  button { font-family: inherit; }
 
-  /* Header */
-  .hdr { text-align: center; padding: 8px 0 22px; }
-  .eyebrow { font-size: 12px; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--accent); font-weight: 600; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 36px 20px 120px; }
+
+  /* =========================================================
+     HEADER
+     ========================================================= */
+  .hdr { text-align: center; padding: 12px 0 32px; position: relative; }
+  .crest { display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--terracotta); font-weight: 500;
+    padding: 6px 14px; border: 1px solid var(--line-strong);
+    border-radius: 999px; background: rgba(255,255,255,0.5); }
+  .crest::before, .crest::after {
+    content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--terracotta); display: inline-block;
+  }
   h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 700;
-    font-size: 42px; line-height: 1.08; margin: 6px 0 4px;
-    letter-spacing: -0.01em; }
-  .tagline { color: var(--muted); font-size: 14px; font-style: italic; }
-  .divider { width: 48px; height: 2px; background: var(--accent); margin: 14px auto 0; border-radius: 2px; }
+    font-size: clamp(48px, 8vw, 76px); line-height: 0.98; margin: 18px 0 8px;
+    letter-spacing: -0.025em;
+    font-variation-settings: "opsz" 120;
+  }
+  h1 .ital { font-style: italic; font-weight: 500; color: var(--terracotta); }
+  .tagline { color: var(--ink-3); font-size: 15px; font-style: italic;
+    font-family: 'Fraunces', serif; font-weight: 400; margin-top: 2px; }
+  .datestamp { display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 18px; padding: 6px 14px;
+    background: var(--paper-warm); border: 1px solid var(--line);
+    border-radius: 999px; color: var(--ink-2);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.08em; }
+  .datestamp .dot { width: 6px; height: 6px; border-radius: 50%;
+    background: var(--herb); box-shadow: 0 0 0 3px var(--herb-soft); }
 
-  /* Cards */
-  .card { background: var(--card); border: 1px solid var(--line);
-    border-radius: 14px; padding: 18px 18px 16px; margin-bottom: 14px;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.02); }
+  /* =========================================================
+     CARDS
+     ========================================================= */
+  .card { background: var(--paper); border: 1px solid var(--line);
+    border-radius: var(--r-lg); padding: 22px 22px 20px;
+    margin-bottom: 16px; box-shadow: var(--shadow-1);
+    transition: box-shadow .2s ease, transform .2s ease; }
   .card-h { display: flex; align-items: baseline; justify-content: space-between;
-    margin-bottom: 12px; }
-  .card-title { font-family: 'Fraunces', Georgia, serif; font-weight: 700;
-    font-size: 17px; color: var(--ink); }
-  .card-hint { font-size: 12px; color: var(--muted); }
-  .card-sub { font-size: 12px; color: var(--muted); margin: -6px 0 12px; }
+    margin-bottom: 4px; gap: 14px; }
+  .card-title {
+    font-family: 'Fraunces', Georgia, serif; font-weight: 600;
+    font-size: 22px; color: var(--ink); letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--terracotta); font-weight: 500;
+    background: var(--terracotta-soft); padding: 3px 7px; border-radius: 6px;
+    letter-spacing: 0.05em;
+  }
+  .card-hint { font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em;
+    text-transform: lowercase; }
+  .card-sub { font-size: 13px; color: var(--ink-3); margin: 8px 0 16px;
+    max-width: 56ch; line-height: 1.5; }
+  .card-sub i { color: var(--terracotta); font-style: italic; }
 
-  /* Chips */
-  .row { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chip { padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px;
-    background: #fff; color: var(--ink-2); font-size: 13px; font-weight: 500;
-    cursor: pointer; user-select: none; transition: all .12s ease; }
-  .chip:hover { border-color: var(--accent-2); }
-  .chip.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
-  .chip.small { padding: 5px 10px; font-size: 12px; }
+  /* Section count badge */
+  .count-pill { font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-2); background: var(--bg-deep);
+    padding: 2px 8px; border-radius: 6px; margin-left: 6px;
+    display: none; }
+  .count-pill.show { display: inline-block; }
 
-  /* Form bits */
-  textarea { width: 100%; padding: 11px 12px; border-radius: 10px;
-    border: 1px solid var(--line); background: #fffdf9; font-size: 14px;
-    color: var(--ink); resize: vertical; min-height: 60px;
-    font-family: inherit; }
-  textarea:focus { outline: none; border-color: var(--accent); }
-  .text-helps { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .text-help { font-size: 11px; color: var(--accent); cursor: pointer;
-    border: 1px dashed var(--accent); padding: 3px 8px; border-radius: 999px; }
+  /* =========================================================
+     MOOD PRESETS
+     ========================================================= */
+  .mood-row {
+    display: flex; gap: 10px; overflow-x: auto;
+    margin: 0 -20px 22px; padding: 4px 20px 14px;
+    scrollbar-width: none;
+  }
+  .mood-row::-webkit-scrollbar { display: none; }
+  .mood {
+    flex: 0 0 auto; border: 1px solid var(--line);
+    background: var(--paper-warm); border-radius: 14px;
+    padding: 12px 16px 12px 14px; cursor: pointer;
+    display: flex; align-items: center; gap: 11px;
+    transition: all .15s ease; min-width: max-content;
+  }
+  .mood:hover { border-color: var(--terracotta); transform: translateY(-1px); }
+  .mood.on { background: var(--terracotta-soft); border-color: var(--terracotta); }
+  .mood .glyph { width: 22px; height: 22px; flex: 0 0 22px;
+    display: grid; place-items: center; border-radius: 50%;
+    background: var(--bg-deep);
+  }
+  .mood .glyph svg { width: 14px; height: 14px; }
+  .mood .label { font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .mood .sub { font-size: 11px; color: var(--muted); margin-top: 1px; white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
 
-  /* Show more toggle */
-  .more-toggle { display: inline-block; margin-top: 8px; color: var(--accent);
-    font-size: 12px; cursor: pointer; font-weight: 600; }
+  /* =========================================================
+     CUISINE CARDS (replaces simple chips)
+     ========================================================= */
+  .cuisine-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 4px; }
+  @media (max-width: 600px) { .cuisine-row { grid-template-columns: repeat(3, 1fr); } }
+  .cui {
+    border: 1px solid var(--line); background: var(--paper-warm);
+    border-radius: 12px; padding: 14px 8px 12px; text-align: center;
+    cursor: pointer; transition: all .15s ease; user-select: none;
+  }
+  .cui:hover { border-color: var(--terracotta-2); transform: translateY(-1px); }
+  .cui.on { background: var(--terracotta-soft); border-color: var(--terracotta); }
+  .cui .swatch { width: 16px; height: 16px; border-radius: 50%; margin: 0 auto 8px;
+    border: 1px solid rgba(0,0,0,0.05); }
+  .cui .name { font-size: 13px; font-weight: 600; color: var(--ink); }
+
+  /* =========================================================
+     INGREDIENT CHIPS
+     ========================================================= */
+  .row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 4px; }
+  .chip { padding: 8px 13px; border: 1px solid var(--line); border-radius: 999px;
+    background: var(--paper-warm); color: var(--ink-2);
+    font-size: 13px; font-weight: 500;
+    cursor: pointer; user-select: none; transition: all .12s ease;
+    position: relative;
+  }
+  .chip:hover { border-color: var(--terracotta); background: #fff; transform: translateY(-1px); }
+  .chip.on {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    color: #fff; font-weight: 600;
+    padding-left: 26px;
+  }
+  .chip.on::before {
+    content: ""; position: absolute; left: 11px; top: 50%;
+    transform: translateY(-50%);
+    width: 8px; height: 4px;
+    border-left: 2px solid #fff; border-bottom: 2px solid #fff;
+    transform: translateY(-65%) rotate(-45deg);
+  }
+  /* Category coloring for "on" state */
+  #veg .chip.on { background: var(--herb); border-color: var(--herb); }
+  #grain .chip.on { background: var(--saffron); border-color: var(--saffron); }
+  #pulse .chip.on { background: var(--plum); border-color: var(--plum); }
+
+  .group-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+    margin: 18px 0 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .group-label::before { content: ""; flex: 0 0 14px; height: 1px; background: var(--line-strong); }
+
+  /* Show more */
+  .more-toggle { display: inline-block; margin-top: 12px; color: var(--terracotta);
+    font-size: 12px; cursor: pointer; font-weight: 600;
+    border: 1px dashed var(--terracotta); padding: 4px 10px; border-radius: 999px;
+    transition: all .12s ease;
+  }
+  .more-toggle:hover { background: var(--terracotta-soft); }
   .hidden-chips { display: none; }
   .hidden-chips.show { display: contents; }
 
-  /* Button */
-  .btn { display: block; width: 100%; padding: 16px; border-radius: 14px; border: 0;
-    background: var(--accent); color: #fff; font-size: 17px; font-weight: 600;
-    cursor: pointer; margin-top: 6px; font-family: 'Fraunces', Georgia, serif;
-    letter-spacing: 0.01em; transition: transform .06s ease, background .12s ease; }
-  .btn:hover { background: var(--accent-2); }
+  /* =========================================================
+     FREE TEXT
+     ========================================================= */
+  textarea { width: 100%; padding: 14px 14px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--paper-warm);
+    font-size: 14px; color: var(--ink); resize: vertical; min-height: 72px;
+    font-family: inherit; line-height: 1.5; transition: all .15s ease; }
+  textarea:focus { outline: none; border-color: var(--terracotta);
+    background: #fff; box-shadow: 0 0 0 3px var(--terracotta-soft); }
+  .text-helps { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .text-help { font-size: 12px; color: var(--terracotta); cursor: pointer;
+    border: 1px dashed var(--terracotta); padding: 4px 10px; border-radius: 999px;
+    transition: all .12s ease; user-select: none;
+  }
+  .text-help:hover { background: var(--terracotta-soft); }
+
+  /* =========================================================
+     CTA BUTTONS
+     ========================================================= */
+  .cta-block { margin-top: 24px; }
+  .btn { display: block; width: 100%; padding: 20px;
+    border-radius: 16px; border: 0;
+    background: var(--terracotta); color: #fff;
+    font-size: 19px; font-weight: 600;
+    cursor: pointer; font-family: 'Fraunces', Georgia, serif;
+    letter-spacing: -0.005em;
+    transition: transform .06s ease, background .12s ease, box-shadow .2s ease;
+    box-shadow: 0 6px 16px -8px rgba(179,65,29,0.6), 0 1px 0 rgba(0,0,0,0.05) inset;
+    position: relative;
+  }
+  .btn:hover { background: var(--terracotta-2); transform: translateY(-1px); }
   .btn:active { transform: scale(.99); }
-  .btn-row { display: flex; gap: 10px; margin-top: 8px; }
-  .btn.secondary { background: #fff; color: var(--accent); border: 1px solid var(--accent);
-    flex: 1; padding: 12px; font-size: 14px; }
+  .btn .arrow { display: inline-block; margin-left: 8px; transition: transform .2s ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .btn-row { display: flex; gap: 10px; margin-top: 10px; }
+  .btn.secondary { background: transparent; color: var(--terracotta);
+    border: 1px solid var(--line-strong);
+    flex: 1; padding: 12px; font-size: 14px; box-shadow: none;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+  }
+  .btn.secondary:hover { background: var(--paper); border-color: var(--terracotta); transform: none; }
 
-  /* Result */
-  .result-card { padding: 4px 18px 14px; }
-  .result-h { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700;
-    color: var(--ink); padding: 16px 0 4px; }
-  .slot { display: grid; grid-template-columns: 102px 1fr auto; gap: 12px;
-    align-items: start; padding: 14px 0; border-bottom: 1px solid var(--line-2); }
+  /* =========================================================
+     RESULT — Menu Card
+     ========================================================= */
+  .menu-card {
+    margin-top: 24px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+  }
+  .menu-card.hidden { display: none; }
+
+  .menu-head {
+    background: linear-gradient(180deg, var(--bg-deep) 0%, var(--paper-warm) 100%);
+    padding: 26px 26px 22px; border-bottom: 1px dashed var(--line-strong);
+    text-align: center;
+  }
+  .menu-head .kicker {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--terracotta); letter-spacing: 0.22em; text-transform: uppercase;
+    font-weight: 500;
+  }
+  .menu-head h2 {
+    font-family: 'Fraunces', serif; font-weight: 700;
+    font-size: 32px; margin: 6px 0 4px; letter-spacing: -0.015em;
+    font-style: italic; font-variation-settings: "opsz" 144;
+  }
+  .menu-head .menu-date {
+    color: var(--muted); font-size: 13px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em;
+  }
+  .menu-head .ornament {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; margin: 14px 0 0;
+    color: var(--terracotta);
+  }
+  .menu-head .ornament::before,
+  .menu-head .ornament::after {
+    content: ""; width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+  }
+  .menu-head .ornament .dia {
+    width: 6px; height: 6px; transform: rotate(45deg);
+    background: var(--terracotta); border-radius: 1px;
+  }
+
+  /* Soak banner inside menu card */
+  .soak-banner {
+    margin: 22px 22px 0; background: var(--night); color: #f3eada;
+    padding: 14px 18px; border-radius: 14px; display: none;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    position: relative; overflow: hidden;
+  }
+  .soak-banner.show { display: flex; gap: 12px; align-items: center; }
+  .soak-banner .moon {
+    width: 32px; height: 32px; border-radius: 50%; flex: 0 0 32px;
+    background: radial-gradient(circle at 30% 30%, var(--moon), #c98e30 80%);
+    box-shadow: 0 0 24px rgba(246,194,92,0.5);
+    position: relative;
+  }
+  .soak-banner .moon::after {
+    content: ""; position: absolute; left: -4px; top: -2px;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--night);
+  }
+  .soak-banner .txt { font-size: 13px; line-height: 1.4; }
+  .soak-banner .lbl {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--moon); letter-spacing: 0.18em; text-transform: uppercase;
+    display: block; margin-bottom: 2px;
+  }
+  .soak-banner b { color: #fff; font-weight: 600; }
+
+  /* Slots */
+  .slots { padding: 8px 22px 22px; }
+  .slot {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 14px;
+    padding: 20px 0;
+    border-bottom: 1px dashed var(--line);
+    align-items: start;
+  }
   .slot:last-child { border-bottom: 0; }
-  .slot-label { color: var(--muted); font-size: 11px; text-transform: uppercase;
-    letter-spacing: .12em; padding-top: 4px; font-weight: 600; }
-  .dish { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
-    color: var(--ink); line-height: 1.2; }
-  .meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
-  .meta .pip { color: var(--accent); font-weight: 600; }
-  .reroll { background: transparent; border: 1px solid var(--line);
-    border-radius: 8px; color: var(--accent); font-size: 12px;
-    cursor: pointer; padding: 6px 10px; white-space: nowrap; }
-  .reroll:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .slot .idx {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--terracotta); font-weight: 600;
+    padding-top: 5px; letter-spacing: 0.04em;
+  }
+  .slot .slot-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 4px; font-weight: 500;
+  }
+  .slot .dish {
+    font-family: 'Fraunces', serif;
+    font-size: 22px; font-weight: 600; line-height: 1.15;
+    color: var(--ink); letter-spacing: -0.005em;
+    display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+  }
+  .slot .dish .soak-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; font-weight: 600; letter-spacing: 0.12em;
+    color: var(--moon); background: var(--night);
+    padding: 3px 7px; border-radius: 5px;
+    vertical-align: middle;
+  }
+  .slot .meta {
+    margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px 10px;
+    align-items: center;
+  }
+  .slot .pill {
+    font-size: 11px; padding: 3px 9px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--paper-warm);
+    color: var(--ink-3); font-weight: 500;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .slot .pill .swatch { width: 6px; height: 6px; border-radius: 50%; }
+  .slot .pill.time { background: var(--saffron-soft); border-color: var(--saffron);
+    color: #7a5410; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .slot .pill.protein-high { background: var(--herb-soft); border-color: var(--herb); color: var(--herb); }
+  .slot .ings {
+    margin-top: 8px; font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+  .slot .reroll {
+    background: transparent; border: 1px solid var(--line);
+    border-radius: 10px; color: var(--terracotta);
+    font-size: 11px; cursor: pointer; padding: 7px 11px;
+    white-space: nowrap; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em;
+    text-transform: uppercase; transition: all .12s ease;
+  }
+  .slot .reroll:hover { border-color: var(--terracotta); background: var(--terracotta-soft); }
+  .slot .reroll .icon { display: inline-block; transition: transform .3s ease; }
+  .slot .reroll:hover .icon { transform: rotate(180deg); }
+  .slot .empty { color: var(--muted); font-style: italic; font-size: 14px;
+    font-family: 'Fraunces', serif; }
 
-  .soak { display: inline-block; margin-left: 8px; padding: 2px 7px;
-    border-radius: 5px; background: var(--warn-soft); color: var(--warn);
-    font-size: 10px; font-weight: 700; letter-spacing: .04em;
-    vertical-align: middle; }
+  /* Day-divider for 3-day mode */
+  .day-divider {
+    margin: 24px 22px 0; padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .day-divider .dlabel {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+    color: var(--ink); font-style: italic;
+  }
+  .day-divider .ddate {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--muted); letter-spacing: 0.08em;
+  }
 
-  .empty { color: var(--muted); font-style: italic; font-size: 14px; }
+  /* =========================================================
+     FOOTER
+     ========================================================= */
+  .footer { text-align: center; color: var(--muted); font-size: 12px;
+    margin-top: 36px; font-style: italic;
+    font-family: 'Fraunces', serif; }
+  .footer .sep { color: var(--line-strong); margin: 0 8px; }
 
-  .soak-banner { background: var(--warn-soft); color: var(--warn);
-    padding: 11px 14px; border-radius: 10px; font-size: 13px;
-    margin: 14px 0 0; display: none; border-left: 3px solid var(--warn); }
-  .soak-banner.show { display: block; }
-  .soak-banner b { font-weight: 700; }
+  /* =========================================================
+     TWEAKS PANEL
+     ========================================================= */
+  .tweaks-panel {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--paper); border: 1px solid var(--line-strong);
+    border-radius: 16px; padding: 18px 18px 14px;
+    box-shadow: var(--shadow-2);
+    width: 260px; z-index: 9999;
+    display: none;
+  }
+  .tweaks-panel.show { display: block; }
+  .tweaks-h { display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px; }
+  .tweaks-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px;
+    display: flex; align-items: center; gap: 8px; }
+  .tweaks-title::before { content: ""; width: 6px; height: 6px;
+    background: var(--terracotta); border-radius: 50%; }
+  .tweaks-close { background: none; border: 0; cursor: pointer;
+    color: var(--muted); font-size: 18px; padding: 0; line-height: 1; }
+  .tweaks-row { margin-bottom: 12px; }
+  .tweaks-label { font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 6px; }
+  .tweaks-opts { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tweaks-opt { padding: 6px 10px; border: 1px solid var(--line);
+    border-radius: 8px; font-size: 12px; cursor: pointer;
+    background: var(--paper-warm); color: var(--ink-2); font-weight: 500;
+  }
+  .tweaks-opt.on { background: var(--terracotta); color: #fff; border-color: var(--terracotta); }
+  .tweaks-opt .pswatch { display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; margin-right: 5px; vertical-align: middle; }
 
-  .footer { text-align: center; color: var(--muted); font-size: 11px;
-    margin-top: 28px; font-style: italic; }
+  /* =========================================================
+     COMPACT density tweak
+     ========================================================= */
+  body[data-density="compact"] .card { padding: 16px 18px 14px; margin-bottom: 12px; }
+  body[data-density="compact"] .card-title { font-size: 18px; }
+  body[data-density="compact"] .slot { padding: 14px 0; }
+  body[data-density="compact"] .slot .dish { font-size: 18px; }
 
-  @media (max-width: 500px) {
-    h1 { font-size: 34px; }
-    .slot { grid-template-columns: 78px 1fr; }
-    .slot .reroll { grid-column: 1 / -1; justify-self: start; margin-top: 4px; }
+  /* =========================================================
+     ANIMATIONS
+     ========================================================= */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); }
+                     to { opacity: 1; transform: translateY(0); } }
+  .menu-card { animation: fadeUp .4s ease both; }
+  .slot { animation: fadeUp .4s ease both; }
+  .slot:nth-child(1) { animation-delay: .05s; }
+  .slot:nth-child(2) { animation-delay: .1s; }
+  .slot:nth-child(3) { animation-delay: .15s; }
+  .slot:nth-child(4) { animation-delay: .2s; }
+  .slot:nth-child(5) { animation-delay: .25s; }
+
+  /* =========================================================
+     RESPONSIVE
+     ========================================================= */
+  @media (max-width: 540px) {
+    .wrap { padding: 20px 14px 100px; }
+    h1 { font-size: 44px; }
+    .card { padding: 18px 16px 16px; }
+    .slot { grid-template-columns: 36px 1fr; }
+    .slot .reroll { grid-column: 2; justify-self: start; margin-top: 6px; }
+    .menu-head { padding: 22px 18px 18px; }
+    .menu-head h2 { font-size: 26px; }
+    .slots { padding: 4px 18px 18px; }
+    .tweaks-panel { right: 12px; bottom: 12px; width: calc(100vw - 24px); max-width: 280px; }
   }
 </style>
 </head>
-<body>
+<body data-palette="terracotta" data-density="cozy">
 <div class="wrap">
 
-  <div class="hdr">
-    <div class="eyebrow">Kasi Family</div>
-    <h1>Khane mein kya?</h1>
+  <!-- HEADER -->
+  <header class="hdr">
+    <div class="crest">Kasi Family · est. ghar</div>
+    <h1>Khane mein <span class="ital">kya?</span></h1>
     <div class="tagline">What shall we cook tomorrow?</div>
-    <div class="divider"></div>
-  </div>
+    <div class="datestamp"><span class="dot"></span><span id="datestamp">—</span></div>
+  </header>
+
+  <!-- MOOD PRESETS -->
+  <div class="mood-row" id="moods"></div>
 
   <!-- CUISINE -->
   <div class="card">
     <div class="card-h">
-      <div class="card-title">Cuisine</div>
+      <div class="card-title"><span class="num">01</span>Cuisine</div>
       <div class="card-hint">applies to lunch + dinner</div>
     </div>
-    <div class="row" id="cuisine">
-      <div class="chip on" data-c="any">Any</div>
-      <div class="chip" data-c="Indian">Indian</div>
-      <div class="chip" data-c="Asian">Asian</div>
-      <div class="chip" data-c="Mexican">Mexican</div>
-      <div class="chip" data-c="Italian">Italian</div>
-      <div class="chip" data-c="Continental">Continental</div>
-    </div>
+    <div class="cuisine-row" id="cuisine"></div>
   </div>
 
   <!-- VEGETABLES -->
   <div class="card">
     <div class="card-h">
-      <div class="card-title">Vegetables in the fridge</div>
+      <div class="card-title">
+        <span class="num">02</span>Vegetables in the fridge
+        <span class="count-pill" id="veg-count"></span>
+      </div>
       <div class="card-hint">optional</div>
     </div>
-    <div class="card-sub">Regular veggies (onion, tomato, peas, potato…) are always assumed to be at home. Tap one or two specials you'd like to use — we'll bias toward dishes using <i>any</i> of them, not all.</div>
+    <div class="card-sub">Regular veggies (onion, tomato, peas, potato…) are always assumed at home. Tap one or two specials you'd like to use — we'll bias toward dishes using <i>any</i> of them, not all.</div>
     <div class="row" id="veg"></div>
     <span class="more-toggle" data-target="veg-more">Show more vegetables ↓</span>
   </div>
@@ -169,21 +562,23 @@
   <!-- GRAINS / PULSES -->
   <div class="card">
     <div class="card-h">
-      <div class="card-title">Grains &amp; pulses to use</div>
+      <div class="card-title">
+        <span class="num">03</span>Grains &amp; pulses to use
+        <span class="count-pill" id="grain-count"></span>
+      </div>
       <div class="card-hint">optional</div>
     </div>
     <div class="card-sub">Skip entirely, or tap a few you'd like to finish off. Not a strict filter — just a nudge.</div>
     <div class="row" id="grain"></div>
     <span class="more-toggle" data-target="grain-more">Show more grains ↓</span>
-    <div style="height: 14px;"></div>
-    <div class="card-sub" style="margin-top:0;">Pulses &amp; proteins</div>
+    <div class="group-label">Pulses &amp; proteins</div>
     <div class="row" id="pulse"></div>
   </div>
 
   <!-- FREE TEXT -->
   <div class="card">
     <div class="card-h">
-      <div class="card-title">Anything else?</div>
+      <div class="card-title"><span class="num">04</span>Anything else?</div>
       <div class="card-hint">optional</div>
     </div>
     <div class="card-sub">e.g. "Kid is sick, light food" · "No rice" · "Something quick" · "Aaji is visiting, traditional"</div>
@@ -197,733 +592,55 @@
     </div>
   </div>
 
-  <button class="btn" id="shuffle">Khane mein kya? &nbsp;→</button>
-  <div class="btn-row">
-    <button class="btn secondary" id="reset">Clear all</button>
+  <div class="cta-block">
+    <button class="btn" id="shuffle">Plan tomorrow's menu <span class="arrow">→</span></button>
+    <div class="btn-row">
+      <button class="btn secondary" id="reset">Clear all</button>
+    </div>
   </div>
 
-  <div id="soakBanner" class="soak-banner"></div>
+  <!-- RESULT -->
+  <div class="menu-card hidden" id="result"></div>
 
-  <div class="card result-card" id="result" style="display:none;">
-    <div class="result-h">Tomorrow's plan</div>
-    <div id="slots"></div>
+  <div class="footer">
+    Savinaru kitchen <span class="sep">·</span> veg <span class="sep">·</span>
+    no eggs <span class="sep">·</span> no maida <span class="sep">·</span> no deep-fry
   </div>
-
-  <div class="footer">Savinaru kitchen · veg · no eggs · no maida · no deep-fry</div>
 </div>
 
-<script>
-/* ============================================================
-   BACK-END DATA
-   ============================================================ */
+<!-- Tweaks panel (toggled by host's Tweaks button) -->
+<div class="tweaks-panel" id="tweaks">
+  <div class="tweaks-h">
+    <div class="tweaks-title">Tweaks</div>
+    <button class="tweaks-close" id="tweaks-close" aria-label="Close">×</button>
+  </div>
+  <div class="tweaks-row">
+    <div class="tweaks-label">Palette</div>
+    <div class="tweaks-opts" data-tweak="palette">
+      <div class="tweaks-opt on" data-val="terracotta"><span class="pswatch" style="background:#b3411d"></span>Terracotta</div>
+      <div class="tweaks-opt" data-val="mint"><span class="pswatch" style="background:#2e6648"></span>Mint</div>
+      <div class="tweaks-opt" data-val="sunset"><span class="pswatch" style="background:#c43a3f"></span>Sunset</div>
+    </div>
+  </div>
+  <div class="tweaks-row">
+    <div class="tweaks-label">Density</div>
+    <div class="tweaks-opts" data-tweak="density">
+      <div class="tweaks-opt on" data-val="cozy">Cozy</div>
+      <div class="tweaks-opt" data-val="compact">Compact</div>
+    </div>
+  </div>
+  <div class="tweaks-row">
+    <div class="tweaks-label">Plan how many days?</div>
+    <div class="tweaks-opts" data-tweak="days">
+      <div class="tweaks-opt on" data-val="1">Tomorrow only</div>
+      <div class="tweaks-opt" data-val="3">3 days</div>
+    </div>
+  </div>
+</div>
 
-// Master list of vegetables we'll show as chips.
-// Lead with specialty veggies — the ones you'd actually plan around.
-// Common staples (onion, tomato, etc.) are assumed always at home but
-// still listed under "show more" in case the user wants to nudge.
-const VEG_OPTIONS = [
-  "spinach","cauliflower","bell pepper","methi","bhindi","mushroom",
-  "broccoli","eggplant","karela","drumstick","tinda","zucchini",
-  "gawar","ridge gourd","pumpkin","beetroot","radish",
-  "_more_",
-  "potato","peas","carrot","cabbage","lauki","sweet potato",
-  "sweetcorn","cucumber","tomato","onion","garlic","beans"
-];
-
-const GRAIN_OPTIONS = [
-  "rice","wheat","rava","poha","oats","millets","ragi","daliya",
-  "_more_",
-  "quinoa","jowar","vermicelli","sabudhana","chia","pasta","noodles","bread","tortilla"
-];
-
-const PULSE_OPTIONS = [
-  "moong dal","toor dal","chana dal","urad","masoor dal",
-  "rajma","chickpea","kala channa","lobia",
-  "sprouts","besan","paneer","tofu","peanut"
-];
-
-/* Each item:
-     n        - display name
-     slot     - breakfast | tiffin | lunch | snack | dinner
-     cuisine  - Indian | Asian | Mexican | Italian | Continental
-     dairy    - none | light | heavy
-     protein  - low | med | high
-     soak     - true if needs overnight soak
-     veg      - vegetables used
-     grain    - grains used
-     pulse    - pulses / proteins used
-*/
-const MENU = [
-  // ---------- BREAKFAST ----------
-  { n:"Rava Upma", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["onion","peas","carrot"], grain:["rava"], pulse:[] },
-  { n:"Millets Upma", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["onion","peas","carrot"], grain:["millets"], pulse:[] },
-  { n:"Poha - Brown", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["onion","peas"], grain:["poha"], pulse:[] },
-  { n:"Poha - Green", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["onion"], grain:["poha"], pulse:[] },
-  { n:"Oats Pongal", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"med",
-    veg:[], grain:["oats"], pulse:["moong dal"] },
-  { n:"Oats Chilla", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["onion","tomato"], grain:["oats"], pulse:[] },
-  { n:"Moong Dal Chilla", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion"], grain:[], pulse:["moong dal"] },
-  { n:"Besan Chilla", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:[], pulse:["besan"] },
-  { n:"Ragi Upma", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["onion","peas"], grain:["ragi"], pulse:[] },
-  { n:"Ragi Dosa", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:[], grain:["ragi","rice"], pulse:["urad"], soak:true },
-  { n:"Ragi Porridge", slot:"breakfast", cuisine:"Indian", dairy:"heavy", protein:"med",
-    veg:[], grain:["ragi"], pulse:[] },
-  { n:"Jowar Porridge", slot:"breakfast", cuisine:"Indian", dairy:"heavy", protein:"med",
-    veg:[], grain:["jowar"], pulse:[] },
-  { n:"Daliya Khichdi", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["onion","peas","carrot"], grain:["daliya"], pulse:["moong dal"] },
-  { n:"Oats Idli", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"med",
-    veg:[], grain:["oats","rava"], pulse:[] },
-  { n:"Vermicelli Upma", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["onion","peas"], grain:["vermicelli"], pulse:[] },
-  { n:"Dhokla - White / Katta", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"med",
-    veg:[], grain:["rice"], pulse:["urad"], soak:true },
-  { n:"Dhokla - Kaman", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:[], grain:[], pulse:["besan"] },
-  { n:"Paratha - Aloo", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:["potato"], grain:["wheat"], pulse:[] },
-  { n:"Paratha - Methi", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:["methi"], grain:["wheat"], pulse:[] },
-  { n:"Paratha - Paneer", slot:"breakfast", cuisine:"Indian", dairy:"heavy", protein:"high",
-    veg:[], grain:["wheat"], pulse:["paneer"] },
-  { n:"Tikki - Sabudhana", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["potato"], grain:["sabudhana"], pulse:[], soak:true },
-  { n:"Tikki - Aloo", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["potato"], grain:[], pulse:[] },
-  { n:"Tikki - Sweet Potato / Makhana", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["sweet potato"], grain:[], pulse:[] },
-  { n:"Tikki - Harabhara", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["spinach","peas"], grain:[], pulse:[] },
-  { n:"Paneer Burjhi", slot:"breakfast", cuisine:"Indian", dairy:"heavy", protein:"high",
-    veg:["onion","tomato"], grain:[], pulse:["paneer"] },
-  { n:"Sprouts", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:[], pulse:["sprouts"], soak:true },
-  { n:"Cereals", slot:"breakfast", cuisine:"Continental", dairy:"heavy", protein:"med",
-    veg:[], grain:["oats","wheat"], pulse:[] },
-  { n:"Oat Flour Pancakes", slot:"breakfast", cuisine:"Continental", dairy:"light", protein:"low",
-    veg:[], grain:["oats"], pulse:[] },
-  { n:"Smoothie Bowl", slot:"breakfast", cuisine:"Continental", dairy:"heavy", protein:"med",
-    veg:[], grain:["oats"], pulse:[] },
-  { n:"Quinoa Upma", slot:"breakfast", cuisine:"Continental", dairy:"none", protein:"high",
-    veg:["onion","peas","carrot"], grain:["quinoa"], pulse:[] },
-  { n:"Chia Pudding", slot:"breakfast", cuisine:"Continental", dairy:"heavy", protein:"med",
-    veg:[], grain:["chia"], pulse:[], soak:true },
-  { n:"Fruit Salad Bowl", slot:"breakfast", cuisine:"Continental", dairy:"none", protein:"low",
-    veg:[], grain:[], pulse:[] },
-  { n:"Oats and Chia (with Urad)", slot:"breakfast", cuisine:"Continental", dairy:"light", protein:"med",
-    veg:[], grain:["oats","chia"], pulse:["urad"], soak:true },
-  { n:"Sandwich - Mumbai", slot:"breakfast", cuisine:"Continental", dairy:"light", protein:"low",
-    veg:["potato","cucumber","tomato"], grain:["bread"], pulse:[] },
-  { n:"Sandwich - PBJ", slot:"breakfast", cuisine:"Continental", dairy:"none", protein:"med",
-    veg:[], grain:["bread"], pulse:["peanut"] },
-  // -- South Indian additions --
-  { n:"Adai", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion"], grain:["rice"], pulse:["chana dal","toor dal","urad"], soak:true },
-  { n:"Pesarattu", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion"], grain:["rice"], pulse:["moong dal"], soak:true },
-  { n:"Akki Roti", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["onion","carrot"], grain:["rice"], pulse:[] },
-  { n:"Sevai / Idiyappam", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:[], grain:["rice"], pulse:[] },
-  // -- Kid-friendly Continental --
-  { n:"Cheerios + Yogurt", slot:"breakfast", cuisine:"Continental", dairy:"heavy", protein:"med",
-    veg:[], grain:["oats"], pulse:[] },
-
-  // ---------- TIFFIN BOX ----------
-  { n:"Thepla", slot:"tiffin", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:["methi"], grain:["wheat"], pulse:[] },
-  { n:"Moong Dal Chilla Wrap", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion"], grain:[], pulse:["moong dal"] },
-  { n:"Besan Chilla Roll", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:[], pulse:["besan"] },
-  { n:"Roasted Makhana", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:[], grain:[], pulse:[] },
-  { n:"Veggie Rice Balls", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["carrot","peas"], grain:["rice"], pulse:[] },
-  { n:"Steamed Momos (Veg)", slot:"tiffin", cuisine:"Asian", dairy:"none", protein:"low",
-    veg:["cabbage","carrot"], grain:["wheat"], pulse:[] },
-  { n:"Broccoli Pizza", slot:"tiffin", cuisine:"Italian", dairy:"heavy", protein:"med",
-    veg:["broccoli"], grain:["wheat"], pulse:["paneer"] },
-  { n:"Hummus (Plain)", slot:"tiffin", cuisine:"Continental", dairy:"none", protein:"med",
-    veg:[], grain:[], pulse:["chickpea"], soak:true },
-  { n:"PBJ Sandwich", slot:"tiffin", cuisine:"Continental", dairy:"none", protein:"med",
-    veg:[], grain:["bread"], pulse:["peanut"] },
-  { n:"Homemade Granola Bar (Oats+Nuts)", slot:"tiffin", cuisine:"Continental", dairy:"none", protein:"med",
-    veg:[], grain:["oats"], pulse:[] },
-  { n:"Fruit & Nut Mix", slot:"tiffin", cuisine:"Continental", dairy:"none", protein:"med",
-    veg:[], grain:[], pulse:[] },
-  { n:"Sandwich", slot:"tiffin", cuisine:"Continental", dairy:"light", protein:"low",
-    veg:["cucumber","tomato"], grain:["bread"], pulse:[] },
-  // -- Kid-friendly tiffin additions --
-  { n:"Mini Idlis", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:[], grain:["rice"], pulse:["urad"], soak:true },
-  { n:"Methi Khakra", slot:"tiffin", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:["methi"], grain:["wheat"], pulse:[] },
-  { n:"Sabudana Khichdi", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["potato"], grain:["sabudhana"], pulse:["peanut"], soak:true },
-  { n:"Veggie Roll-up", slot:"tiffin", cuisine:"Continental", dairy:"none", protein:"med",
-    veg:["carrot","cucumber"], grain:["wheat"], pulse:["chickpea"] },
-  { n:"Lemon Rice (Tiffin)", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:[], grain:["rice"], pulse:["peanut"] },
-  { n:"Coconut Rice (Tiffin)", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:[], grain:["rice"], pulse:[] },
-
-  // ---------- LUNCH ----------
-  { n:"Bhindi Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["bhindi"], grain:["wheat"], pulse:[] },
-  { n:"Gawar Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["gawar"], grain:["wheat"], pulse:[] },
-  { n:"Beetroot Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["beetroot"], grain:["wheat"], pulse:[] },
-  { n:"Lauki Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["lauki"], grain:["wheat"], pulse:[] },
-  { n:"Turai / Ridge Gourd Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["ridge gourd"], grain:["wheat"], pulse:[] },
-  { n:"Cabbage Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["cabbage"], grain:["wheat"], pulse:[] },
-  { n:"Palak-Dal Sabzi + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["spinach"], grain:["rice"], pulse:["toor dal"] },
-  { n:"Aloo Matar + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["potato","peas"], grain:["wheat"], pulse:[] },
-  { n:"Akka Massoor + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:["rice"], pulse:["masoor dal"] },
-  { n:"Daal Rasam + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["tomato"], grain:["rice"], pulse:["toor dal"] },
-  { n:"Tomato Rasam + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["tomato"], grain:["rice"], pulse:[] },
-  { n:"Garlic Rasam + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["garlic"], grain:["rice"], pulse:["toor dal"] },
-  { n:"Mixed Daal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:["rice"], pulse:["toor dal","moong dal","chana dal"] },
-  { n:"Palak Dal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["spinach"], grain:["rice"], pulse:["toor dal"] },
-  { n:"Chana Dal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion"], grain:["rice"], pulse:["chana dal"] },
-  { n:"Methi Dal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["methi"], grain:["rice"], pulse:["toor dal"] },
-  { n:"Moong Dal Soup + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:[], grain:["wheat"], pulse:["moong dal"] },
-  { n:"Masala Khichdi", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
-    veg:["peas","carrot","onion"], grain:["rice"], pulse:["moong dal"] },
-  { n:"Spinach Khichdi", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
-    veg:["spinach"], grain:["rice"], pulse:["moong dal"] },
-  { n:"Dalia Khichdi", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
-    veg:["peas","carrot"], grain:["daliya"], pulse:["moong dal"] },
-  { n:"Rajma Chawal", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:["rice"], pulse:["rajma"], soak:true },
-  { n:"Lobia / Chawli + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:["rice"], pulse:["lobia"], soak:true },
-  { n:"Biryani", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
-    veg:["carrot","peas","cauliflower","potato"], grain:["rice"], pulse:[] },
-  { n:"Pulav", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["carrot","peas"], grain:["rice"], pulse:[] },
-  { n:"Channa Pulao", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion"], grain:["rice"], pulse:["chickpea"], soak:true },
-  { n:"Matar Paneer + Roti", slot:"lunch", cuisine:"Indian", dairy:"heavy", protein:"high",
-    veg:["peas","tomato"], grain:["wheat"], pulse:["paneer"] },
-  { n:"Kadhi + Rice", slot:"lunch", cuisine:"Indian", dairy:"heavy", protein:"med",
-    veg:[], grain:["rice"], pulse:["besan"] },
-  { n:"Stuffed Capsicum (Baked) + Roti", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:["bell pepper","potato"], grain:["wheat"], pulse:[] },
-  { n:"Pasta Primavera", slot:"lunch", cuisine:"Italian", dairy:"light", protein:"low",
-    veg:["bell pepper","broccoli","carrot","tomato"], grain:["pasta"], pulse:[] },
-  { n:"Penne Arrabbiata", slot:"lunch", cuisine:"Italian", dairy:"none", protein:"low",
-    veg:["tomato"], grain:["pasta"], pulse:[] },
-  { n:"Quinoa Salad Bowl", slot:"lunch", cuisine:"Continental", dairy:"none", protein:"high",
-    veg:["cucumber","tomato","bell pepper"], grain:["quinoa"], pulse:[] },
-  // -- Sambar varieties --
-  { n:"Vegetable Sambar + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["carrot","beans","drumstick","pumpkin","tomato"], grain:["rice"], pulse:["toor dal"] },
-  { n:"Drumstick Sambar + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["drumstick","tomato"], grain:["rice"], pulse:["toor dal"] },
-  { n:"Muli (Radish) Sambar + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["radish","tomato"], grain:["rice"], pulse:["toor dal"] },
-  // -- South Indian rice mixes & combos --
-  { n:"Bisi Bele Bhath", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
-    veg:["carrot","peas","beans"], grain:["rice"], pulse:["toor dal"] },
-  { n:"Curd Rice", slot:"lunch", cuisine:"Indian", dairy:"heavy", protein:"low",
-    veg:[], grain:["rice"], pulse:[] },
-  { n:"Lemon Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:[], grain:["rice"], pulse:["peanut"] },
-  { n:"Coconut Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:[], grain:["rice"], pulse:[] },
-  { n:"Tamarind Rice (Puliyodharai)", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:[], grain:["rice"], pulse:["peanut"] },
-  { n:"Avial + Rice", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:["carrot","beans","drumstick"], grain:["rice"], pulse:[] },
-  // -- Poriyals (South Indian dry sabzis) --
-  { n:"Beans Poriyal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["beans"], grain:["rice"], pulse:[] },
-  { n:"Cabbage Poriyal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["cabbage"], grain:["rice"], pulse:[] },
-  { n:"Carrot Poriyal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["carrot"], grain:["rice"], pulse:[] },
-  // -- North Indian sabzis --
-  { n:"Methi Aloo + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["methi","potato"], grain:["wheat"], pulse:[] },
-  { n:"Aloo Palak + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["potato","spinach"], grain:["wheat"], pulse:[] },
-  { n:"Karela Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["karela"], grain:["wheat"], pulse:[] },
-  { n:"Tinda Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["tinda"], grain:["wheat"], pulse:[] },
-  { n:"Capsicum Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["bell pepper"], grain:["wheat"], pulse:[] },
-
-  // ---------- SNACK ----------
-  { n:"Roasted Makhana", slot:"snack", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:[], grain:[], pulse:[] },
-  { n:"Roasted Chana", slot:"snack", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:[], grain:[], pulse:["chickpea"] },
-  { n:"Sprouts Chaat", slot:"snack", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:[], pulse:["sprouts"], soak:true },
-  { n:"Fruit Chaat", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:[], grain:[], pulse:[] },
-  { n:"Muhmurra", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["onion","tomato"], grain:[], pulse:[] },
-  { n:"Bang Bang Cauliflower", slot:"snack", cuisine:"Asian", dairy:"light", protein:"low",
-    veg:["cauliflower"], grain:[], pulse:[] },
-  { n:"Cucumber / Carrot Sticks + Hummus", slot:"snack", cuisine:"Continental", dairy:"none", protein:"med",
-    veg:["cucumber","carrot"], grain:[], pulse:["chickpea"], soak:true },
-  { n:"Yogurt Parfait", slot:"snack", cuisine:"Continental", dairy:"heavy", protein:"med",
-    veg:[], grain:["oats"], pulse:[] },
-  { n:"Baked Shakarpara", slot:"snack", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:[], grain:["wheat"], pulse:[] },
-  // -- Chaat & street snacks --
-  { n:"Bhel Puri", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["onion","tomato","potato"], grain:[], pulse:[] },
-  { n:"Sukha Bhel", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["onion","tomato"], grain:[], pulse:[] },
-  { n:"Aloo Chaat", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["potato","onion","tomato"], grain:[], pulse:[] },
-  { n:"Corn Chaat", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["sweetcorn","onion","tomato"], grain:[], pulse:[] },
-  // -- Steamed / baked snacks --
-  { n:"Sundal", slot:"snack", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:[], grain:[], pulse:["chickpea"], soak:true },
-  { n:"Veg Cutlets (Baked)", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["potato","carrot","peas"], grain:[], pulse:[] },
-  { n:"Methi Muthia (Steamed)", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["methi"], grain:["wheat"], pulse:["besan"] },
-  { n:"Lauki Muthia (Steamed)", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["lauki"], grain:["wheat"], pulse:["besan"] },
-  { n:"Plain Khakra", slot:"snack", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:[], grain:["wheat"], pulse:[] },
-  { n:"Bangalore Iyengar Toast", slot:"snack", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:["onion","tomato"], grain:["bread"], pulse:[] },
-  // -- Continental snacks --
-  { n:"Date & Nut Energy Balls", slot:"snack", cuisine:"Continental", dairy:"none", protein:"med",
-    veg:[], grain:["oats"], pulse:[] },
-  { n:"Roasted Mixed Nuts", slot:"snack", cuisine:"Continental", dairy:"none", protein:"med",
-    veg:[], grain:[], pulse:[] },
-  { n:"Bruschetta", slot:"snack", cuisine:"Italian", dairy:"light", protein:"low",
-    veg:["tomato"], grain:["bread"], pulse:[] },
-
-  // ---------- DINNER ----------
-  { n:"Pav-Bhaji", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:["potato","peas","cauliflower","bell pepper","tomato"], grain:["wheat"], pulse:[] },
-  { n:"Missal Pav", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:["wheat"], pulse:["sprouts"], soak:true },
-  { n:"Kati Roll", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"med",
-    veg:["onion","bell pepper"], grain:["wheat"], pulse:["paneer"] },
-  { n:"Chhole + Roti", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:["wheat"], pulse:["chickpea"], soak:true },
-  { n:"Kala Channa + Rice", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:["rice"], pulse:["kala channa"], soak:true },
-  { n:"Dosa", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:[], grain:["rice"], pulse:["urad"], soak:true },
-  { n:"Idly", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:[], grain:["rice"], pulse:["urad"], soak:true },
-  { n:"Rava Idly", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:[], grain:["rava"], pulse:[] },
-  { n:"Palak Paneer + Roti", slot:"dinner", cuisine:"Indian", dairy:"heavy", protein:"high",
-    veg:["spinach"], grain:["wheat"], pulse:["paneer"] },
-  { n:"Palak Mushroom + Roti", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["spinach","mushroom"], grain:["wheat"], pulse:[] },
-  { n:"Methi Paneer + Roti", slot:"dinner", cuisine:"Indian", dairy:"heavy", protein:"high",
-    veg:["methi"], grain:["wheat"], pulse:["paneer"] },
-  { n:"Mushroom Masala + Roti", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"med",
-    veg:["mushroom"], grain:["wheat"], pulse:[] },
-  { n:"Baingan Bharta + Roti", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["eggplant"], grain:["wheat"], pulse:[] },
-  { n:"Aloo Gobi + Roti", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["potato","cauliflower"], grain:["wheat"], pulse:[] },
-  { n:"Dal Makhani (Light) + Roti", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"high",
-    veg:[], grain:["wheat"], pulse:["urad","rajma"], soak:true },
-  { n:"Pumpkin Curry + Roti", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:["pumpkin"], grain:["wheat"], pulse:[] },
-  { n:"Veg Stew + Appam/Rice", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["carrot","potato","peas"], grain:["rice"], pulse:[] },
-  { n:"Stuffed Bell Peppers (Baked)", slot:"dinner", cuisine:"Continental", dairy:"light", protein:"low",
-    veg:["bell pepper"], grain:["rice"], pulse:[] },
-  { n:"Soup - Tomato + Toast", slot:"dinner", cuisine:"Continental", dairy:"none", protein:"low",
-    veg:["tomato"], grain:["bread"], pulse:[] },
-  { n:"Soup - Sweetcorn + Toast", slot:"dinner", cuisine:"Continental", dairy:"light", protein:"low",
-    veg:["sweetcorn"], grain:["bread"], pulse:[] },
-  { n:"Lentil Soup + Toast", slot:"dinner", cuisine:"Continental", dairy:"none", protein:"high",
-    veg:["carrot","onion"], grain:["bread"], pulse:["masoor dal"] },
-  { n:"Vegetable Clear Soup + Toast", slot:"dinner", cuisine:"Continental", dairy:"none", protein:"low",
-    veg:["carrot","cabbage"], grain:["bread"], pulse:[] },
-  { n:"Matar Paneer + Roti", slot:"dinner", cuisine:"Indian", dairy:"heavy", protein:"high",
-    veg:["peas","tomato"], grain:["wheat"], pulse:["paneer"] },
-  { n:"Noodles (Hakka)", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
-    veg:["cabbage","carrot","bell pepper"], grain:["noodles"], pulse:[] },
-  { n:"Millets Noodles", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"med",
-    veg:["cabbage","carrot","bell pepper"], grain:["millets","noodles"], pulse:[] },
-  { n:"Thai Red Curry + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
-    veg:["bell pepper","broccoli","carrot"], grain:["rice"], pulse:[] },
-  { n:"Thai Green Curry + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
-    veg:["bell pepper","broccoli","carrot"], grain:["rice"], pulse:[] },
-  { n:"Chili Tofu + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"high",
-    veg:["bell pepper","onion"], grain:["rice"], pulse:["tofu"] },
-  { n:"Tofu Stir Fry + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"high",
-    veg:["broccoli","bell pepper","carrot"], grain:["rice"], pulse:["tofu"] },
-  { n:"Fried Rice w/ Gravy", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
-    veg:["cabbage","carrot","bell pepper"], grain:["rice"], pulse:[] },
-  { n:"Millet Buddha Bowl", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"med",
-    veg:["carrot","cucumber","bell pepper"], grain:["millets"], pulse:["chickpea"] },
-  { n:"Soup - Manchow + Toast", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
-    veg:["cabbage","carrot"], grain:["noodles"], pulse:[] },
-  { n:"Mexican Tacos", slot:"dinner", cuisine:"Mexican", dairy:"light", protein:"med",
-    veg:["bell pepper","onion","tomato"], grain:["tortilla"], pulse:[] },
-  { n:"Tacos", slot:"dinner", cuisine:"Mexican", dairy:"light", protein:"med",
-    veg:["bell pepper","onion","tomato"], grain:["tortilla"], pulse:[] },
-  { n:"Quesadilla", slot:"dinner", cuisine:"Mexican", dairy:"heavy", protein:"med",
-    veg:["bell pepper","onion"], grain:["tortilla"], pulse:[] },
-  { n:"Burrito Bowl", slot:"dinner", cuisine:"Mexican", dairy:"light", protein:"high",
-    veg:["bell pepper","onion","tomato"], grain:["rice"], pulse:[] },
-  { n:"Pasta", slot:"dinner", cuisine:"Italian", dairy:"light", protein:"low",
-    veg:["tomato"], grain:["pasta"], pulse:[] },
-  { n:"Spaghetti", slot:"dinner", cuisine:"Italian", dairy:"light", protein:"low",
-    veg:["tomato"], grain:["pasta"], pulse:[] },
-  { n:"Spaghetti Arrabbiata", slot:"dinner", cuisine:"Italian", dairy:"none", protein:"low",
-    veg:["tomato"], grain:["pasta"], pulse:[] },
-  { n:"Penne with Pesto", slot:"dinner", cuisine:"Italian", dairy:"light", protein:"low",
-    veg:[], grain:["pasta"], pulse:[] },
-  { n:"Mushroom Risotto", slot:"dinner", cuisine:"Italian", dairy:"heavy", protein:"med",
-    veg:["mushroom"], grain:["rice"], pulse:[] },
-  // -- South Indian dinner additions --
-  { n:"Adai + Avial", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"high",
-    veg:["carrot","beans","drumstick"], grain:["rice"], pulse:["chana dal","toor dal","urad"], soak:true },
-  { n:"Sambar + Rice + Poriyal", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"med",
-    veg:["beans","carrot","drumstick"], grain:["rice"], pulse:["toor dal"] },
-  // -- North Indian dinner additions --
-  { n:"Saag Paneer + Roti", slot:"dinner", cuisine:"Indian", dairy:"heavy", protein:"high",
-    veg:["spinach"], grain:["wheat"], pulse:["paneer"] },
-  { n:"Vegetable Korma + Roti", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"low",
-    veg:["carrot","peas","beans","cauliflower"], grain:["wheat"], pulse:[] },
-  { n:"Aloo Palak + Roti", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"low",
-    veg:["potato","spinach"], grain:["wheat"], pulse:[] },
-  // -- Asian additions --
-  { n:"Tofu Coconut Curry + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"high",
-    veg:["bell pepper","broccoli"], grain:["rice"], pulse:["tofu"] },
-  { n:"Sweet & Sour Tofu + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"high",
-    veg:["bell pepper"], grain:["rice"], pulse:["tofu"] },
-  { n:"Vegetable Sushi Rolls", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
-    veg:["cucumber","carrot"], grain:["rice"], pulse:[] },
-  { n:"Veg Spring Rolls (Baked)", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
-    veg:["cabbage","carrot","bell pepper"], grain:["wheat"], pulse:[] },
-  // -- Mexican additions --
-  { n:"Veg Fajitas", slot:"dinner", cuisine:"Mexican", dairy:"light", protein:"low",
-    veg:["bell pepper","onion"], grain:["tortilla"], pulse:[] },
-  { n:"Enchiladas (Baked)", slot:"dinner", cuisine:"Mexican", dairy:"heavy", protein:"med",
-    veg:["bell pepper","onion","tomato"], grain:["tortilla"], pulse:[] },
-  { n:"Black Bean Soup + Toast", slot:"dinner", cuisine:"Mexican", dairy:"none", protein:"high",
-    veg:["onion","tomato"], grain:["bread"], pulse:[] },
-  { n:"Mexican Rice Bowl", slot:"dinner", cuisine:"Mexican", dairy:"light", protein:"med",
-    veg:["bell pepper","onion","tomato"], grain:["rice"], pulse:[] },
-  // -- Italian additions --
-  { n:"Veg Lasagna (Whole Wheat)", slot:"dinner", cuisine:"Italian", dairy:"heavy", protein:"med",
-    veg:["spinach","mushroom","tomato"], grain:["wheat"], pulse:[] },
-  { n:"Eggplant Parmigiana (Baked)", slot:"dinner", cuisine:"Italian", dairy:"heavy", protein:"med",
-    veg:["eggplant","tomato"], grain:[], pulse:[] },
-  { n:"Minestrone Soup + Toast", slot:"dinner", cuisine:"Italian", dairy:"none", protein:"med",
-    veg:["carrot","tomato"], grain:["bread","pasta"], pulse:[] },
-  // -- Continental additions --
-  { n:"Falafel + Hummus + Pita", slot:"dinner", cuisine:"Continental", dairy:"none", protein:"high",
-    veg:[], grain:["wheat"], pulse:["chickpea"], soak:true },
-  { n:"Mediterranean Bowl", slot:"dinner", cuisine:"Continental", dairy:"light", protein:"high",
-    veg:["cucumber","tomato","bell pepper"], grain:["quinoa"], pulse:["chickpea"] },
-  { n:"Tabouleh + Pita", slot:"dinner", cuisine:"Continental", dairy:"none", protein:"med",
-    veg:["tomato","cucumber"], grain:["wheat"], pulse:[] },
-  { n:"Stuffed Zucchini (Baked)", slot:"dinner", cuisine:"Continental", dairy:"light", protein:"low",
-    veg:["zucchini","bell pepper"], grain:["rice"], pulse:[] },
-];
-
-const SLOTS = [
-  { key:"breakfast", label:"Breakfast" },
-  { key:"tiffin",    label:"Tiffin Box" },
-  { key:"lunch",     label:"Lunch" },
-  { key:"snack",     label:"Snack" },
-  { key:"dinner",    label:"Dinner" },
-];
-
-/* ============================================================
-   STATE + UI WIRING
-   ============================================================ */
-const state = {
-  cuisine: "any",
-  veg: new Set(),
-  grain: new Set(),
-  pulse: new Set(),
-  text: "",
-};
-let current = {}; // slot -> picked item
-
-function titleCase(s) {
-  return s.replace(/\b\w/g, c => c.toUpperCase());
-}
-
-function makeChips(container, options, set) {
-  container.innerHTML = '';
-  let inMore = false;
-  let moreWrap = null;
-  for (const opt of options) {
-    if (opt === "_more_") {
-      inMore = true;
-      moreWrap = document.createElement('span');
-      moreWrap.className = 'hidden-chips';
-      moreWrap.dataset.more = container.id + '-more';
-      container.appendChild(moreWrap);
-      continue;
-    }
-    const chip = document.createElement('div');
-    chip.className = 'chip small';
-    chip.textContent = titleCase(opt);
-    chip.dataset.val = opt;
-    chip.onclick = () => {
-      if (set.has(opt)) { set.delete(opt); chip.classList.remove('on'); }
-      else { set.add(opt); chip.classList.add('on'); }
-    };
-    (inMore ? moreWrap : container).appendChild(chip);
-  }
-}
-
-makeChips(document.getElementById('veg'), VEG_OPTIONS, state.veg);
-makeChips(document.getElementById('grain'), GRAIN_OPTIONS, state.grain);
-makeChips(document.getElementById('pulse'), PULSE_OPTIONS, state.pulse);
-
-document.querySelectorAll('.more-toggle').forEach(t => {
-  t.onclick = () => {
-    const tgt = t.dataset.target;
-    const el = document.querySelector(`[data-more="${tgt}"]`);
-    if (!el) return;
-    el.classList.toggle('show');
-    t.textContent = el.classList.contains('show')
-      ? t.textContent.replace('↓','↑').replace('Show more','Hide')
-      : t.textContent.replace('↑','↓').replace('Hide','Show more');
-  };
-});
-
-document.querySelectorAll('#cuisine .chip').forEach(c => {
-  c.onclick = () => {
-    document.querySelectorAll('#cuisine .chip').forEach(x => x.classList.remove('on'));
-    c.classList.add('on');
-    state.cuisine = c.dataset.c;
-  };
-});
-
-document.querySelectorAll('.text-help').forEach(h => {
-  h.onclick = () => {
-    const ta = document.getElementById('freetext');
-    const add = h.dataset.add;
-    ta.value = (ta.value.trim() ? ta.value.trim() + ", " : "") + add;
-    state.text = ta.value;
-  };
-});
-
-document.getElementById('freetext').oninput = e => state.text = e.target.value;
-
-document.getElementById('reset').onclick = () => {
-  state.cuisine = "any";
-  state.veg.clear(); state.grain.clear(); state.pulse.clear();
-  state.text = "";
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
-  document.querySelector('#cuisine .chip[data-c="any"]').classList.add('on');
-  document.getElementById('freetext').value = "";
-  document.getElementById('result').style.display = 'none';
-  document.getElementById('soakBanner').classList.remove('show');
-  window.scrollTo({top: 0, behavior: 'smooth'});
-};
-
-/* ============================================================
-   SCORING + PICKING
-   ============================================================ */
-function parseText(t) {
-  const s = t.toLowerCase();
-  return {
-    raw: s,
-    noSoak: /\b(quick|fast|no\s*soak|easy|simple|in a hurry)\b/.test(s),
-    noRice: /\bno\s*rice\b/.test(s),
-    noWheat: /\b(no\s*wheat|no\s*roti|no\s*chapati|gluten)\b/.test(s),
-    light: /\b(light|sick|kid is sick|fever|bland|comfort)\b/.test(s),
-    southIndian: /\b(south|south\s*indian|tamil|udupi|mangalore)\b/.test(s),
-    northIndian: /\b(north\s*indian|punjabi)\b/.test(s),
-    tokens: s.split(/[^a-z]+/).filter(w => w.length > 2),
-  };
-}
-
-// Hard filters = the things the user has *explicitly* told us not to do
-// (text like "no rice", "quick", "light"). Selections like veggies/grains/
-// pulses are NEVER hard filters — they only bias the random pick.
-function passesHard(item, t) {
-  if (t.noSoak && item.soak) return false;
-  if (t.noRice && (item.grain || []).includes("rice")) return false;
-  if (t.noWheat && (item.grain || []).includes("wheat")) return false;
-  if (t.light && item.dairy === "heavy") return false;
-  return true;
-}
-
-// Score = soft preference. Higher score => higher probability, but every
-// item that passes hard filters still has a nonzero chance.
-function score(item, slotKey, t) {
-  let s = 0;
-
-  // Cuisine is an explicit user choice — treat as hard filter for lunch/dinner.
-  if (state.cuisine !== "any" && (slotKey === "lunch" || slotKey === "dinner")) {
-    if (item.cuisine !== state.cuisine) return -1;
-  }
-
-  // Selected ingredients = "any of these" bias. One match is enough.
-  if (state.veg.size) {
-    if ((item.veg || []).some(v => state.veg.has(v))) s += 3;
-  }
-  if (state.grain.size) {
-    if ((item.grain || []).some(g => state.grain.has(g))) s += 3;
-  }
-  if (state.pulse.size) {
-    if ((item.pulse || []).some(p => state.pulse.has(p))) s += 3;
-  }
-
-  // Free-text nudges
-  if (t.tokens.length) {
-    const hay = (item.n + " " + (item.veg||[]).join(" ") + " " + (item.grain||[]).join(" ") + " " + (item.pulse||[]).join(" ")).toLowerCase();
-    for (const tok of t.tokens) if (hay.includes(tok)) s += 1;
-  }
-  if (t.southIndian && /dosa|idly|idli|rasam|sambar|pongal|upma|appam/i.test(item.n)) s += 4;
-  if (t.northIndian && /roti|paratha|paneer|chhole|rajma|kati|dal makhani|biryani/i.test(item.n)) s += 4;
-  if (t.light && /soup|khichdi|rasam|porridge|fruit|salad/i.test(item.n)) s += 2;
-
-  return s;
-}
-
-// Weighted random pick across the entire candidate pool — every item that
-// passes hard filters has a chance. Selections just bend probability.
-function weightedRandom(scored) {
-  if (!scored.length) return null;
-  const weights = scored.map(x => 1 + Math.max(0, x.s) * 1.5);
-  const total = weights.reduce((a, b) => a + b, 0);
-  let r = Math.random() * total;
-  for (let i = 0; i < scored.length; i++) {
-    r -= weights[i];
-    if (r <= 0) return scored[i].item;
-  }
-  return scored[scored.length - 1].item;
-}
-
-function pickForSlot(slotKey, t, excludeName) {
-  const candidates = MENU
-    .filter(m => m.slot === slotKey)
-    .filter(m => passesHard(m, t))
-    .filter(m => !excludeName || m.n !== excludeName)
-    .map(m => ({ item: m, s: score(m, slotKey, t) }))
-    .filter(x => x.s >= 0);
-
-  if (!candidates.length) {
-    // Very loose fallback if everything got filtered out
-    const loose = MENU.filter(m => m.slot === slotKey && (!excludeName || m.n !== excludeName));
-    if (!loose.length) return null;
-    return loose[Math.floor(Math.random() * loose.length)];
-  }
-  return weightedRandom(candidates);
-}
-
-function pickAll() {
-  const t = parseText(state.text);
-  const picks = {};
-  for (const s of SLOTS) picks[s.key] = pickForSlot(s.key, t);
-  return picks;
-}
-
-function rerollSlot(slotKey) {
-  const t = parseText(state.text);
-  const prev = current[slotKey] ? current[slotKey].n : null;
-  current[slotKey] = pickForSlot(slotKey, t, prev);
-  render();
-}
-
-/* ============================================================
-   RENDER
-   ============================================================ */
-function render() {
-  const result = document.getElementById('result');
-  const slotsEl = document.getElementById('slots');
-  const banner = document.getElementById('soakBanner');
-  result.style.display = 'block';
-  slotsEl.innerHTML = '';
-
-  const soakItems = [];
-
-  for (const s of SLOTS) {
-    const item = current[s.key];
-    const row = document.createElement('div');
-    row.className = 'slot';
-    if (!item) {
-      row.innerHTML = `
-        <div class="slot-label">${s.label}</div>
-        <div><span class="empty">No match — try loosening filters.</span></div>
-        <div></div>`;
-    } else {
-      const tags = [];
-      tags.push(`<span class="pip">${item.cuisine}</span>`);
-      if (item.dairy === "heavy") tags.push("heavy dairy");
-      else if (item.dairy === "light") tags.push("light dairy");
-      else tags.push("no dairy");
-      tags.push(item.protein === "high" ? "high protein" : item.protein === "med" ? "med protein" : "light protein");
-      const ings = [...(item.veg||[]), ...(item.grain||[]), ...(item.pulse||[])];
-      if (ings.length) tags.push(ings.slice(0,4).join(", "));
-
-      const soakBadge = item.soak ? `<span class="soak">SOAK TONIGHT</span>` : '';
-      if (item.soak) soakItems.push(item.n);
-
-      row.innerHTML = `
-        <div class="slot-label">${s.label}</div>
-        <div>
-          <div class="dish">${item.n}${soakBadge}</div>
-          <div class="meta">${tags.join(" · ")}</div>
-        </div>
-        <button class="reroll" data-slot="${s.key}">↻ swap</button>`;
-    }
-    slotsEl.appendChild(row);
-  }
-
-  slotsEl.querySelectorAll('.reroll').forEach(b => {
-    b.onclick = () => rerollSlot(b.dataset.slot);
-  });
-
-  if (soakItems.length) {
-    banner.innerHTML = "<b>Tonight:</b> soak " + soakItems.join(", ");
-    banner.classList.add('show');
-  } else {
-    banner.classList.remove('show');
-  }
-
-  result.scrollIntoView({behavior:'smooth', block:'start'});
-}
-
-document.getElementById('shuffle').onclick = () => {
-  current = pickAll();
-  render();
-};
-</script>
+<!-- Data: VEG_OPTIONS, GRAIN_OPTIONS, PULSE_OPTIONS, MENU, SLOTS -->
+<script src="data.js"></script>
+<!-- UI shell -->
+<script src="app.js"></script>
 </body>
 </html>

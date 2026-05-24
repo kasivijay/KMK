@@ -3,3 +3,9 @@ Thumbs.db
 *.swp
 .vscode/
 .idea/
+node_modules/
+.vercel
+.env
+.env.local
+ClaudeDesign.zip
+*.xlsx

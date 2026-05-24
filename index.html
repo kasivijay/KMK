@@ -223,10 +223,11 @@
 // still listed under "show more" in case the user wants to nudge.
 const VEG_OPTIONS = [
   "spinach","cauliflower","bell pepper","methi","bhindi","mushroom",
-  "broccoli","eggplant","gawar","ridge gourd","pumpkin","beetroot",
+  "broccoli","eggplant","karela","drumstick","tinda","zucchini",
+  "gawar","ridge gourd","pumpkin","beetroot","radish",
   "_more_",
   "potato","peas","carrot","cabbage","lauki","sweet potato",
-  "sweetcorn","cucumber","tomato","onion","garlic"
+  "sweetcorn","cucumber","tomato","onion","garlic","beans"
 ];
 
 const GRAIN_OPTIONS = [
@@ -324,6 +325,18 @@ const MENU = [
     veg:["potato","cucumber","tomato"], grain:["bread"], pulse:[] },
   { n:"Sandwich - PBJ", slot:"breakfast", cuisine:"Continental", dairy:"none", protein:"med",
     veg:[], grain:["bread"], pulse:["peanut"] },
+  // -- South Indian additions --
+  { n:"Adai", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion"], grain:["rice"], pulse:["chana dal","toor dal","urad"], soak:true },
+  { n:"Pesarattu", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion"], grain:["rice"], pulse:["moong dal"], soak:true },
+  { n:"Akki Roti", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["onion","carrot"], grain:["rice"], pulse:[] },
+  { n:"Sevai / Idiyappam", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:[], grain:["rice"], pulse:[] },
+  // -- Kid-friendly Continental --
+  { n:"Cheerios + Yogurt", slot:"breakfast", cuisine:"Continental", dairy:"heavy", protein:"med",
+    veg:[], grain:["oats"], pulse:[] },
 
   // ---------- TIFFIN BOX ----------
   { n:"Thepla", slot:"tiffin", cuisine:"Indian", dairy:"light", protein:"low",
@@ -350,6 +363,19 @@ const MENU = [
     veg:[], grain:[], pulse:[] },
   { n:"Sandwich", slot:"tiffin", cuisine:"Continental", dairy:"light", protein:"low",
     veg:["cucumber","tomato"], grain:["bread"], pulse:[] },
+  // -- Kid-friendly tiffin additions --
+  { n:"Mini Idlis", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:[], grain:["rice"], pulse:["urad"], soak:true },
+  { n:"Methi Khakra", slot:"tiffin", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["methi"], grain:["wheat"], pulse:[] },
+  { n:"Sabudana Khichdi", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["potato"], grain:["sabudhana"], pulse:["peanut"], soak:true },
+  { n:"Veggie Roll-up", slot:"tiffin", cuisine:"Continental", dairy:"none", protein:"med",
+    veg:["carrot","cucumber"], grain:["wheat"], pulse:["chickpea"] },
+  { n:"Lemon Rice (Tiffin)", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:[], grain:["rice"], pulse:["peanut"] },
+  { n:"Coconut Rice (Tiffin)", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:[], grain:["rice"], pulse:[] },
 
   // ---------- LUNCH ----------
   { n:"Bhindi Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
@@ -414,6 +440,44 @@ const MENU = [
     veg:["tomato"], grain:["pasta"], pulse:[] },
   { n:"Quinoa Salad Bowl", slot:"lunch", cuisine:"Continental", dairy:"none", protein:"high",
     veg:["cucumber","tomato","bell pepper"], grain:["quinoa"], pulse:[] },
+  // -- Sambar varieties --
+  { n:"Vegetable Sambar + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["carrot","beans","drumstick","pumpkin","tomato"], grain:["rice"], pulse:["toor dal"] },
+  { n:"Drumstick Sambar + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["drumstick","tomato"], grain:["rice"], pulse:["toor dal"] },
+  { n:"Muli (Radish) Sambar + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["radish","tomato"], grain:["rice"], pulse:["toor dal"] },
+  // -- South Indian rice mixes & combos --
+  { n:"Bisi Bele Bhath", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:["carrot","peas","beans"], grain:["rice"], pulse:["toor dal"] },
+  { n:"Curd Rice", slot:"lunch", cuisine:"Indian", dairy:"heavy", protein:"low",
+    veg:[], grain:["rice"], pulse:[] },
+  { n:"Lemon Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:[], grain:["rice"], pulse:["peanut"] },
+  { n:"Coconut Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:[], grain:["rice"], pulse:[] },
+  { n:"Tamarind Rice (Puliyodharai)", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:[], grain:["rice"], pulse:["peanut"] },
+  { n:"Avial + Rice", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["carrot","beans","drumstick"], grain:["rice"], pulse:[] },
+  // -- Poriyals (South Indian dry sabzis) --
+  { n:"Beans Poriyal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["beans"], grain:["rice"], pulse:[] },
+  { n:"Cabbage Poriyal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["cabbage"], grain:["rice"], pulse:[] },
+  { n:"Carrot Poriyal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["carrot"], grain:["rice"], pulse:[] },
+  // -- North Indian sabzis --
+  { n:"Methi Aloo + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["methi","potato"], grain:["wheat"], pulse:[] },
+  { n:"Aloo Palak + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["potato","spinach"], grain:["wheat"], pulse:[] },
+  { n:"Karela Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["karela"], grain:["wheat"], pulse:[] },
+  { n:"Tinda Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["tinda"], grain:["wheat"], pulse:[] },
+  { n:"Capsicum Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["bell pepper"], grain:["wheat"], pulse:[] },
 
   // ---------- SNACK ----------
   { n:"Roasted Makhana", slot:"snack", cuisine:"Indian", dairy:"none", protein:"med",
@@ -434,6 +498,35 @@ const MENU = [
     veg:[], grain:["oats"], pulse:[] },
   { n:"Baked Shakarpara", slot:"snack", cuisine:"Indian", dairy:"light", protein:"low",
     veg:[], grain:["wheat"], pulse:[] },
+  // -- Chaat & street snacks --
+  { n:"Bhel Puri", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["onion","tomato","potato"], grain:[], pulse:[] },
+  { n:"Sukha Bhel", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["onion","tomato"], grain:[], pulse:[] },
+  { n:"Aloo Chaat", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["potato","onion","tomato"], grain:[], pulse:[] },
+  { n:"Corn Chaat", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["sweetcorn","onion","tomato"], grain:[], pulse:[] },
+  // -- Steamed / baked snacks --
+  { n:"Sundal", slot:"snack", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:[], grain:[], pulse:["chickpea"], soak:true },
+  { n:"Veg Cutlets (Baked)", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["potato","carrot","peas"], grain:[], pulse:[] },
+  { n:"Methi Muthia (Steamed)", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["methi"], grain:["wheat"], pulse:["besan"] },
+  { n:"Lauki Muthia (Steamed)", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["lauki"], grain:["wheat"], pulse:["besan"] },
+  { n:"Plain Khakra", slot:"snack", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:[], grain:["wheat"], pulse:[] },
+  { n:"Bangalore Iyengar Toast", slot:"snack", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["onion","tomato"], grain:["bread"], pulse:[] },
+  // -- Continental snacks --
+  { n:"Date & Nut Energy Balls", slot:"snack", cuisine:"Continental", dairy:"none", protein:"med",
+    veg:[], grain:["oats"], pulse:[] },
+  { n:"Roasted Mixed Nuts", slot:"snack", cuisine:"Continental", dairy:"none", protein:"med",
+    veg:[], grain:[], pulse:[] },
+  { n:"Bruschetta", slot:"snack", cuisine:"Italian", dairy:"light", protein:"low",
+    veg:["tomato"], grain:["bread"], pulse:[] },
 
   // ---------- DINNER ----------
   { n:"Pav-Bhaji", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"low",
@@ -518,6 +611,52 @@ const MENU = [
     veg:[], grain:["pasta"], pulse:[] },
   { n:"Mushroom Risotto", slot:"dinner", cuisine:"Italian", dairy:"heavy", protein:"med",
     veg:["mushroom"], grain:["rice"], pulse:[] },
+  // -- South Indian dinner additions --
+  { n:"Adai + Avial", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"high",
+    veg:["carrot","beans","drumstick"], grain:["rice"], pulse:["chana dal","toor dal","urad"], soak:true },
+  { n:"Sambar + Rice + Poriyal", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["beans","carrot","drumstick"], grain:["rice"], pulse:["toor dal"] },
+  // -- North Indian dinner additions --
+  { n:"Saag Paneer + Roti", slot:"dinner", cuisine:"Indian", dairy:"heavy", protein:"high",
+    veg:["spinach"], grain:["wheat"], pulse:["paneer"] },
+  { n:"Vegetable Korma + Roti", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["carrot","peas","beans","cauliflower"], grain:["wheat"], pulse:[] },
+  { n:"Aloo Palak + Roti", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["potato","spinach"], grain:["wheat"], pulse:[] },
+  // -- Asian additions --
+  { n:"Tofu Coconut Curry + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"high",
+    veg:["bell pepper","broccoli"], grain:["rice"], pulse:["tofu"] },
+  { n:"Sweet & Sour Tofu + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"high",
+    veg:["bell pepper"], grain:["rice"], pulse:["tofu"] },
+  { n:"Vegetable Sushi Rolls", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
+    veg:["cucumber","carrot"], grain:["rice"], pulse:[] },
+  { n:"Veg Spring Rolls (Baked)", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
+    veg:["cabbage","carrot","bell pepper"], grain:["wheat"], pulse:[] },
+  // -- Mexican additions --
+  { n:"Veg Fajitas", slot:"dinner", cuisine:"Mexican", dairy:"light", protein:"low",
+    veg:["bell pepper","onion"], grain:["tortilla"], pulse:[] },
+  { n:"Enchiladas (Baked)", slot:"dinner", cuisine:"Mexican", dairy:"heavy", protein:"med",
+    veg:["bell pepper","onion","tomato"], grain:["tortilla"], pulse:[] },
+  { n:"Black Bean Soup + Toast", slot:"dinner", cuisine:"Mexican", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:["bread"], pulse:[] },
+  { n:"Mexican Rice Bowl", slot:"dinner", cuisine:"Mexican", dairy:"light", protein:"med",
+    veg:["bell pepper","onion","tomato"], grain:["rice"], pulse:[] },
+  // -- Italian additions --
+  { n:"Veg Lasagna (Whole Wheat)", slot:"dinner", cuisine:"Italian", dairy:"heavy", protein:"med",
+    veg:["spinach","mushroom","tomato"], grain:["wheat"], pulse:[] },
+  { n:"Eggplant Parmigiana (Baked)", slot:"dinner", cuisine:"Italian", dairy:"heavy", protein:"med",
+    veg:["eggplant","tomato"], grain:[], pulse:[] },
+  { n:"Minestrone Soup + Toast", slot:"dinner", cuisine:"Italian", dairy:"none", protein:"med",
+    veg:["carrot","tomato"], grain:["bread","pasta"], pulse:[] },
+  // -- Continental additions --
+  { n:"Falafel + Hummus + Pita", slot:"dinner", cuisine:"Continental", dairy:"none", protein:"high",
+    veg:[], grain:["wheat"], pulse:["chickpea"], soak:true },
+  { n:"Mediterranean Bowl", slot:"dinner", cuisine:"Continental", dairy:"light", protein:"high",
+    veg:["cucumber","tomato","bell pepper"], grain:["quinoa"], pulse:["chickpea"] },
+  { n:"Tabouleh + Pita", slot:"dinner", cuisine:"Continental", dairy:"none", protein:"med",
+    veg:["tomato","cucumber"], grain:["wheat"], pulse:[] },
+  { n:"Stuffed Zucchini (Baked)", slot:"dinner", cuisine:"Continental", dairy:"light", protein:"low",
+    veg:["zucchini","bell pepper"], grain:["rice"], pulse:[] },
 ];
 
 const SLOTS = [

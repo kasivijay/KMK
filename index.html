@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kasi Family — Khane mein kya?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbf6ee;
+    --bg-2: #f3ead8;
+    --card: #ffffff;
+    --ink: #1f1b16;
+    --ink-2: #4a4439;
+    --muted: #837a6b;
+    --line: #ead9bc;
+    --line-2: #f2e7d0;
+    --accent: #a04a1f;
+    --accent-2: #c25e29;
+    --accent-soft: #fbe3cf;
+    --warn: #9b2c2c;
+    --warn-soft: #fde2dc;
+    --ok: #2f6b3a;
+    --ok-soft: #e0f0e2;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 18px 100px; }
+
+  /* Header */
+  .hdr { text-align: center; padding: 8px 0 22px; }
+  .eyebrow { font-size: 12px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; }
+  h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 700;
+    font-size: 42px; line-height: 1.08; margin: 6px 0 4px;
+    letter-spacing: -0.01em; }
+  .tagline { color: var(--muted); font-size: 14px; font-style: italic; }
+  .divider { width: 48px; height: 2px; background: var(--accent); margin: 14px auto 0; border-radius: 2px; }
+
+  /* Cards */
+  .card { background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 18px 18px 16px; margin-bottom: 14px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02); }
+  .card-h { display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 12px; }
+  .card-title { font-family: 'Fraunces', Georgia, serif; font-weight: 700;
+    font-size: 17px; color: var(--ink); }
+  .card-hint { font-size: 12px; color: var(--muted); }
+  .card-sub { font-size: 12px; color: var(--muted); margin: -6px 0 12px; }
+
+  /* Chips */
+  .row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px;
+    background: #fff; color: var(--ink-2); font-size: 13px; font-weight: 500;
+    cursor: pointer; user-select: none; transition: all .12s ease; }
+  .chip:hover { border-color: var(--accent-2); }
+  .chip.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .chip.small { padding: 5px 10px; font-size: 12px; }
+
+  /* Form bits */
+  textarea { width: 100%; padding: 11px 12px; border-radius: 10px;
+    border: 1px solid var(--line); background: #fffdf9; font-size: 14px;
+    color: var(--ink); resize: vertical; min-height: 60px;
+    font-family: inherit; }
+  textarea:focus { outline: none; border-color: var(--accent); }
+  .text-helps { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .text-help { font-size: 11px; color: var(--accent); cursor: pointer;
+    border: 1px dashed var(--accent); padding: 3px 8px; border-radius: 999px; }
+
+  /* Show more toggle */
+  .more-toggle { display: inline-block; margin-top: 8px; color: var(--accent);
+    font-size: 12px; cursor: pointer; font-weight: 600; }
+  .hidden-chips { display: none; }
+  .hidden-chips.show { display: contents; }
+
+  /* Button */
+  .btn { display: block; width: 100%; padding: 16px; border-radius: 14px; border: 0;
+    background: var(--accent); color: #fff; font-size: 17px; font-weight: 600;
+    cursor: pointer; margin-top: 6px; font-family: 'Fraunces', Georgia, serif;
+    letter-spacing: 0.01em; transition: transform .06s ease, background .12s ease; }
+  .btn:hover { background: var(--accent-2); }
+  .btn:active { transform: scale(.99); }
+  .btn-row { display: flex; gap: 10px; margin-top: 8px; }
+  .btn.secondary { background: #fff; color: var(--accent); border: 1px solid var(--accent);
+    flex: 1; padding: 12px; font-size: 14px; }
+
+  /* Result */
+  .result-card { padding: 4px 18px 14px; }
+  .result-h { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700;
+    color: var(--ink); padding: 16px 0 4px; }
+  .slot { display: grid; grid-template-columns: 102px 1fr auto; gap: 12px;
+    align-items: start; padding: 14px 0; border-bottom: 1px solid var(--line-2); }
+  .slot:last-child { border-bottom: 0; }
+  .slot-label { color: var(--muted); font-size: 11px; text-transform: uppercase;
+    letter-spacing: .12em; padding-top: 4px; font-weight: 600; }
+  .dish { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+    color: var(--ink); line-height: 1.2; }
+  .meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .meta .pip { color: var(--accent); font-weight: 600; }
+  .reroll { background: transparent; border: 1px solid var(--line);
+    border-radius: 8px; color: var(--accent); font-size: 12px;
+    cursor: pointer; padding: 6px 10px; white-space: nowrap; }
+  .reroll:hover { border-color: var(--accent); background: var(--accent-soft); }
+
+  .soak { display: inline-block; margin-left: 8px; padding: 2px 7px;
+    border-radius: 5px; background: var(--warn-soft); color: var(--warn);
+    font-size: 10px; font-weight: 700; letter-spacing: .04em;
+    vertical-align: middle; }
+
+  .empty { color: var(--muted); font-style: italic; font-size: 14px; }
+
+  .soak-banner { background: var(--warn-soft); color: var(--warn);
+    padding: 11px 14px; border-radius: 10px; font-size: 13px;
+    margin: 14px 0 0; display: none; border-left: 3px solid var(--warn); }
+  .soak-banner.show { display: block; }
+  .soak-banner b { font-weight: 700; }
+
+  .footer { text-align: center; color: var(--muted); font-size: 11px;
+    margin-top: 28px; font-style: italic; }
+
+  @media (max-width: 500px) {
+    h1 { font-size: 34px; }
+    .slot { grid-template-columns: 78px 1fr; }
+    .slot .reroll { grid-column: 1 / -1; justify-self: start; margin-top: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hdr">
+    <div class="eyebrow">Kasi Family</div>
+    <h1>Khane mein kya?</h1>
+    <div class="tagline">What shall we cook tomorrow?</div>
+    <div class="divider"></div>
+  </div>
+
+  <!-- CUISINE -->
+  <div class="card">
+    <div class="card-h">
+      <div class="card-title">Cuisine</div>
+      <div class="card-hint">applies to lunch + dinner</div>
+    </div>
+    <div class="row" id="cuisine">
+      <div class="chip on" data-c="any">Any</div>
+      <div class="chip" data-c="Indian">Indian</div>
+      <div class="chip" data-c="Asian">Asian</div>
+      <div class="chip" data-c="Mexican">Mexican</div>
+      <div class="chip" data-c="Italian">Italian</div>
+      <div class="chip" data-c="Continental">Continental</div>
+    </div>
+  </div>
+
+  <!-- VEGETABLES -->
+  <div class="card">
+    <div class="card-h">
+      <div class="card-title">Vegetables in the fridge</div>
+      <div class="card-hint">optional</div>
+    </div>
+    <div class="card-sub">Regular veggies (onion, tomato, peas, potato…) are always assumed to be at home. Tap one or two specials you'd like to use — we'll bias toward dishes using <i>any</i> of them, not all.</div>
+    <div class="row" id="veg"></div>
+    <span class="more-toggle" data-target="veg-more">Show more vegetables ↓</span>
+  </div>
+
+  <!-- GRAINS / PULSES -->
+  <div class="card">
+    <div class="card-h">
+      <div class="card-title">Grains &amp; pulses to use</div>
+      <div class="card-hint">optional</div>
+    </div>
+    <div class="card-sub">Skip entirely, or tap a few you'd like to finish off. Not a strict filter — just a nudge.</div>
+    <div class="row" id="grain"></div>
+    <span class="more-toggle" data-target="grain-more">Show more grains ↓</span>
+    <div style="height: 14px;"></div>
+    <div class="card-sub" style="margin-top:0;">Pulses &amp; proteins</div>
+    <div class="row" id="pulse"></div>
+  </div>
+
+  <!-- FREE TEXT -->
+  <div class="card">
+    <div class="card-h">
+      <div class="card-title">Anything else?</div>
+      <div class="card-hint">optional</div>
+    </div>
+    <div class="card-sub">e.g. "Kid is sick, light food" · "No rice" · "Something quick" · "Aaji is visiting, traditional"</div>
+    <textarea id="freetext" placeholder="Type freely…"></textarea>
+    <div class="text-helps">
+      <span class="text-help" data-add="something light">+ light</span>
+      <span class="text-help" data-add="something quick, no soaking">+ quick</span>
+      <span class="text-help" data-add="no rice">+ no rice</span>
+      <span class="text-help" data-add="no wheat">+ no wheat</span>
+      <span class="text-help" data-add="south indian">+ south indian</span>
+    </div>
+  </div>
+
+  <button class="btn" id="shuffle">Khane mein kya? &nbsp;→</button>
+  <div class="btn-row">
+    <button class="btn secondary" id="reset">Clear all</button>
+  </div>
+
+  <div id="soakBanner" class="soak-banner"></div>
+
+  <div class="card result-card" id="result" style="display:none;">
+    <div class="result-h">Tomorrow's plan</div>
+    <div id="slots"></div>
+  </div>
+
+  <div class="footer">Savinaru kitchen · veg · no eggs · no maida · no deep-fry</div>
+</div>
+
+<script>
+/* ============================================================
+   BACK-END DATA
+   ============================================================ */
+
+// Master list of vegetables we'll show as chips.
+// Lead with specialty veggies — the ones you'd actually plan around.
+// Common staples (onion, tomato, etc.) are assumed always at home but
+// still listed under "show more" in case the user wants to nudge.
+const VEG_OPTIONS = [
+  "spinach","cauliflower","bell pepper","methi","bhindi","mushroom",
+  "broccoli","eggplant","gawar","ridge gourd","pumpkin","beetroot",
+  "_more_",
+  "potato","peas","carrot","cabbage","lauki","sweet potato",
+  "sweetcorn","cucumber","tomato","onion","garlic"
+];
+
+const GRAIN_OPTIONS = [
+  "rice","wheat","rava","poha","oats","millets","ragi","daliya",
+  "_more_",
+  "quinoa","jowar","vermicelli","sabudhana","chia","pasta","noodles","bread","tortilla"
+];
+
+const PULSE_OPTIONS = [
+  "moong dal","toor dal","chana dal","urad","masoor dal",
+  "rajma","chickpea","kala channa","lobia",
+  "sprouts","besan","paneer","tofu","peanut"
+];
+
+/* Each item:
+     n        - display name
+     slot     - breakfast | tiffin | lunch | snack | dinner
+     cuisine  - Indian | Asian | Mexican | Italian | Continental
+     dairy    - none | light | heavy
+     protein  - low | med | high
+     soak     - true if needs overnight soak
+     veg      - vegetables used
+     grain    - grains used
+     pulse    - pulses / proteins used
+*/
+const MENU = [
+  // ---------- BREAKFAST ----------
+  { n:"Rava Upma", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["onion","peas","carrot"], grain:["rava"], pulse:[] },
+  { n:"Millets Upma", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["onion","peas","carrot"], grain:["millets"], pulse:[] },
+  { n:"Poha - Brown", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["onion","peas"], grain:["poha"], pulse:[] },
+  { n:"Poha - Green", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["onion"], grain:["poha"], pulse:[] },
+  { n:"Oats Pongal", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:[], grain:["oats"], pulse:["moong dal"] },
+  { n:"Oats Chilla", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["onion","tomato"], grain:["oats"], pulse:[] },
+  { n:"Moong Dal Chilla", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion"], grain:[], pulse:["moong dal"] },
+  { n:"Besan Chilla", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:[], pulse:["besan"] },
+  { n:"Ragi Upma", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["onion","peas"], grain:["ragi"], pulse:[] },
+  { n:"Ragi Dosa", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:[], grain:["ragi","rice"], pulse:["urad"], soak:true },
+  { n:"Ragi Porridge", slot:"breakfast", cuisine:"Indian", dairy:"heavy", protein:"med",
+    veg:[], grain:["ragi"], pulse:[] },
+  { n:"Jowar Porridge", slot:"breakfast", cuisine:"Indian", dairy:"heavy", protein:"med",
+    veg:[], grain:["jowar"], pulse:[] },
+  { n:"Daliya Khichdi", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["onion","peas","carrot"], grain:["daliya"], pulse:["moong dal"] },
+  { n:"Oats Idli", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:[], grain:["oats","rava"], pulse:[] },
+  { n:"Vermicelli Upma", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["onion","peas"], grain:["vermicelli"], pulse:[] },
+  { n:"Dhokla - White / Katta", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:[], grain:["rice"], pulse:["urad"], soak:true },
+  { n:"Dhokla - Kaman", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:[], grain:[], pulse:["besan"] },
+  { n:"Paratha - Aloo", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["potato"], grain:["wheat"], pulse:[] },
+  { n:"Paratha - Methi", slot:"breakfast", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["methi"], grain:["wheat"], pulse:[] },
+  { n:"Paratha - Paneer", slot:"breakfast", cuisine:"Indian", dairy:"heavy", protein:"high",
+    veg:[], grain:["wheat"], pulse:["paneer"] },
+  { n:"Tikki - Sabudhana", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["potato"], grain:["sabudhana"], pulse:[], soak:true },
+  { n:"Tikki - Aloo", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["potato"], grain:[], pulse:[] },
+  { n:"Tikki - Sweet Potato / Makhana", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["sweet potato"], grain:[], pulse:[] },
+  { n:"Tikki - Harabhara", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["spinach","peas"], grain:[], pulse:[] },
+  { n:"Paneer Burjhi", slot:"breakfast", cuisine:"Indian", dairy:"heavy", protein:"high",
+    veg:["onion","tomato"], grain:[], pulse:["paneer"] },
+  { n:"Sprouts", slot:"breakfast", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:[], pulse:["sprouts"], soak:true },
+  { n:"Cereals", slot:"breakfast", cuisine:"Continental", dairy:"heavy", protein:"med",
+    veg:[], grain:["oats","wheat"], pulse:[] },
+  { n:"Oat Flour Pancakes", slot:"breakfast", cuisine:"Continental", dairy:"light", protein:"low",
+    veg:[], grain:["oats"], pulse:[] },
+  { n:"Smoothie Bowl", slot:"breakfast", cuisine:"Continental", dairy:"heavy", protein:"med",
+    veg:[], grain:["oats"], pulse:[] },
+  { n:"Quinoa Upma", slot:"breakfast", cuisine:"Continental", dairy:"none", protein:"high",
+    veg:["onion","peas","carrot"], grain:["quinoa"], pulse:[] },
+  { n:"Chia Pudding", slot:"breakfast", cuisine:"Continental", dairy:"heavy", protein:"med",
+    veg:[], grain:["chia"], pulse:[], soak:true },
+  { n:"Fruit Salad Bowl", slot:"breakfast", cuisine:"Continental", dairy:"none", protein:"low",
+    veg:[], grain:[], pulse:[] },
+  { n:"Oats and Chia (with Urad)", slot:"breakfast", cuisine:"Continental", dairy:"light", protein:"med",
+    veg:[], grain:["oats","chia"], pulse:["urad"], soak:true },
+  { n:"Sandwich - Mumbai", slot:"breakfast", cuisine:"Continental", dairy:"light", protein:"low",
+    veg:["potato","cucumber","tomato"], grain:["bread"], pulse:[] },
+  { n:"Sandwich - PBJ", slot:"breakfast", cuisine:"Continental", dairy:"none", protein:"med",
+    veg:[], grain:["bread"], pulse:["peanut"] },
+
+  // ---------- TIFFIN BOX ----------
+  { n:"Thepla", slot:"tiffin", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["methi"], grain:["wheat"], pulse:[] },
+  { n:"Moong Dal Chilla Wrap", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion"], grain:[], pulse:["moong dal"] },
+  { n:"Besan Chilla Roll", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:[], pulse:["besan"] },
+  { n:"Roasted Makhana", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:[], grain:[], pulse:[] },
+  { n:"Veggie Rice Balls", slot:"tiffin", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["carrot","peas"], grain:["rice"], pulse:[] },
+  { n:"Steamed Momos (Veg)", slot:"tiffin", cuisine:"Asian", dairy:"none", protein:"low",
+    veg:["cabbage","carrot"], grain:["wheat"], pulse:[] },
+  { n:"Broccoli Pizza", slot:"tiffin", cuisine:"Italian", dairy:"heavy", protein:"med",
+    veg:["broccoli"], grain:["wheat"], pulse:["paneer"] },
+  { n:"Hummus (Plain)", slot:"tiffin", cuisine:"Continental", dairy:"none", protein:"med",
+    veg:[], grain:[], pulse:["chickpea"], soak:true },
+  { n:"PBJ Sandwich", slot:"tiffin", cuisine:"Continental", dairy:"none", protein:"med",
+    veg:[], grain:["bread"], pulse:["peanut"] },
+  { n:"Homemade Granola Bar (Oats+Nuts)", slot:"tiffin", cuisine:"Continental", dairy:"none", protein:"med",
+    veg:[], grain:["oats"], pulse:[] },
+  { n:"Fruit & Nut Mix", slot:"tiffin", cuisine:"Continental", dairy:"none", protein:"med",
+    veg:[], grain:[], pulse:[] },
+  { n:"Sandwich", slot:"tiffin", cuisine:"Continental", dairy:"light", protein:"low",
+    veg:["cucumber","tomato"], grain:["bread"], pulse:[] },
+
+  // ---------- LUNCH ----------
+  { n:"Bhindi Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["bhindi"], grain:["wheat"], pulse:[] },
+  { n:"Gawar Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["gawar"], grain:["wheat"], pulse:[] },
+  { n:"Beetroot Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["beetroot"], grain:["wheat"], pulse:[] },
+  { n:"Lauki Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["lauki"], grain:["wheat"], pulse:[] },
+  { n:"Turai / Ridge Gourd Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["ridge gourd"], grain:["wheat"], pulse:[] },
+  { n:"Cabbage Sabzi + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["cabbage"], grain:["wheat"], pulse:[] },
+  { n:"Palak-Dal Sabzi + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["spinach"], grain:["rice"], pulse:["toor dal"] },
+  { n:"Aloo Matar + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["potato","peas"], grain:["wheat"], pulse:[] },
+  { n:"Akka Massoor + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:["rice"], pulse:["masoor dal"] },
+  { n:"Daal Rasam + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["tomato"], grain:["rice"], pulse:["toor dal"] },
+  { n:"Tomato Rasam + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["tomato"], grain:["rice"], pulse:[] },
+  { n:"Garlic Rasam + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["garlic"], grain:["rice"], pulse:["toor dal"] },
+  { n:"Mixed Daal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:["rice"], pulse:["toor dal","moong dal","chana dal"] },
+  { n:"Palak Dal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["spinach"], grain:["rice"], pulse:["toor dal"] },
+  { n:"Chana Dal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion"], grain:["rice"], pulse:["chana dal"] },
+  { n:"Methi Dal + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["methi"], grain:["rice"], pulse:["toor dal"] },
+  { n:"Moong Dal Soup + Roti", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:[], grain:["wheat"], pulse:["moong dal"] },
+  { n:"Masala Khichdi", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:["peas","carrot","onion"], grain:["rice"], pulse:["moong dal"] },
+  { n:"Spinach Khichdi", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:["spinach"], grain:["rice"], pulse:["moong dal"] },
+  { n:"Dalia Khichdi", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:["peas","carrot"], grain:["daliya"], pulse:["moong dal"] },
+  { n:"Rajma Chawal", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:["rice"], pulse:["rajma"], soak:true },
+  { n:"Lobia / Chawli + Rice", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:["rice"], pulse:["lobia"], soak:true },
+  { n:"Biryani", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:["carrot","peas","cauliflower","potato"], grain:["rice"], pulse:[] },
+  { n:"Pulav", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["carrot","peas"], grain:["rice"], pulse:[] },
+  { n:"Channa Pulao", slot:"lunch", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion"], grain:["rice"], pulse:["chickpea"], soak:true },
+  { n:"Matar Paneer + Roti", slot:"lunch", cuisine:"Indian", dairy:"heavy", protein:"high",
+    veg:["peas","tomato"], grain:["wheat"], pulse:["paneer"] },
+  { n:"Kadhi + Rice", slot:"lunch", cuisine:"Indian", dairy:"heavy", protein:"med",
+    veg:[], grain:["rice"], pulse:["besan"] },
+  { n:"Stuffed Capsicum (Baked) + Roti", slot:"lunch", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["bell pepper","potato"], grain:["wheat"], pulse:[] },
+  { n:"Pasta Primavera", slot:"lunch", cuisine:"Italian", dairy:"light", protein:"low",
+    veg:["bell pepper","broccoli","carrot","tomato"], grain:["pasta"], pulse:[] },
+  { n:"Penne Arrabbiata", slot:"lunch", cuisine:"Italian", dairy:"none", protein:"low",
+    veg:["tomato"], grain:["pasta"], pulse:[] },
+  { n:"Quinoa Salad Bowl", slot:"lunch", cuisine:"Continental", dairy:"none", protein:"high",
+    veg:["cucumber","tomato","bell pepper"], grain:["quinoa"], pulse:[] },
+
+  // ---------- SNACK ----------
+  { n:"Roasted Makhana", slot:"snack", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:[], grain:[], pulse:[] },
+  { n:"Roasted Chana", slot:"snack", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:[], grain:[], pulse:["chickpea"] },
+  { n:"Sprouts Chaat", slot:"snack", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:[], pulse:["sprouts"], soak:true },
+  { n:"Fruit Chaat", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:[], grain:[], pulse:[] },
+  { n:"Muhmurra", slot:"snack", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["onion","tomato"], grain:[], pulse:[] },
+  { n:"Bang Bang Cauliflower", slot:"snack", cuisine:"Asian", dairy:"light", protein:"low",
+    veg:["cauliflower"], grain:[], pulse:[] },
+  { n:"Cucumber / Carrot Sticks + Hummus", slot:"snack", cuisine:"Continental", dairy:"none", protein:"med",
+    veg:["cucumber","carrot"], grain:[], pulse:["chickpea"], soak:true },
+  { n:"Yogurt Parfait", slot:"snack", cuisine:"Continental", dairy:"heavy", protein:"med",
+    veg:[], grain:["oats"], pulse:[] },
+  { n:"Baked Shakarpara", slot:"snack", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:[], grain:["wheat"], pulse:[] },
+
+  // ---------- DINNER ----------
+  { n:"Pav-Bhaji", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["potato","peas","cauliflower","bell pepper","tomato"], grain:["wheat"], pulse:[] },
+  { n:"Missal Pav", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:["wheat"], pulse:["sprouts"], soak:true },
+  { n:"Kati Roll", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:["onion","bell pepper"], grain:["wheat"], pulse:["paneer"] },
+  { n:"Chhole + Roti", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:["wheat"], pulse:["chickpea"], soak:true },
+  { n:"Kala Channa + Rice", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"high",
+    veg:["onion","tomato"], grain:["rice"], pulse:["kala channa"], soak:true },
+  { n:"Dosa", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:[], grain:["rice"], pulse:["urad"], soak:true },
+  { n:"Idly", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:[], grain:["rice"], pulse:["urad"], soak:true },
+  { n:"Rava Idly", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:[], grain:["rava"], pulse:[] },
+  { n:"Palak Paneer + Roti", slot:"dinner", cuisine:"Indian", dairy:"heavy", protein:"high",
+    veg:["spinach"], grain:["wheat"], pulse:["paneer"] },
+  { n:"Palak Mushroom + Roti", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"med",
+    veg:["spinach","mushroom"], grain:["wheat"], pulse:[] },
+  { n:"Methi Paneer + Roti", slot:"dinner", cuisine:"Indian", dairy:"heavy", protein:"high",
+    veg:["methi"], grain:["wheat"], pulse:["paneer"] },
+  { n:"Mushroom Masala + Roti", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"med",
+    veg:["mushroom"], grain:["wheat"], pulse:[] },
+  { n:"Baingan Bharta + Roti", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["eggplant"], grain:["wheat"], pulse:[] },
+  { n:"Aloo Gobi + Roti", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["potato","cauliflower"], grain:["wheat"], pulse:[] },
+  { n:"Dal Makhani (Light) + Roti", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"high",
+    veg:[], grain:["wheat"], pulse:["urad","rajma"], soak:true },
+  { n:"Pumpkin Curry + Roti", slot:"dinner", cuisine:"Indian", dairy:"light", protein:"low",
+    veg:["pumpkin"], grain:["wheat"], pulse:[] },
+  { n:"Veg Stew + Appam/Rice", slot:"dinner", cuisine:"Indian", dairy:"none", protein:"low",
+    veg:["carrot","potato","peas"], grain:["rice"], pulse:[] },
+  { n:"Stuffed Bell Peppers (Baked)", slot:"dinner", cuisine:"Continental", dairy:"light", protein:"low",
+    veg:["bell pepper"], grain:["rice"], pulse:[] },
+  { n:"Soup - Tomato + Toast", slot:"dinner", cuisine:"Continental", dairy:"none", protein:"low",
+    veg:["tomato"], grain:["bread"], pulse:[] },
+  { n:"Soup - Sweetcorn + Toast", slot:"dinner", cuisine:"Continental", dairy:"light", protein:"low",
+    veg:["sweetcorn"], grain:["bread"], pulse:[] },
+  { n:"Lentil Soup + Toast", slot:"dinner", cuisine:"Continental", dairy:"none", protein:"high",
+    veg:["carrot","onion"], grain:["bread"], pulse:["masoor dal"] },
+  { n:"Vegetable Clear Soup + Toast", slot:"dinner", cuisine:"Continental", dairy:"none", protein:"low",
+    veg:["carrot","cabbage"], grain:["bread"], pulse:[] },
+  { n:"Matar Paneer + Roti", slot:"dinner", cuisine:"Indian", dairy:"heavy", protein:"high",
+    veg:["peas","tomato"], grain:["wheat"], pulse:["paneer"] },
+  { n:"Noodles (Hakka)", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
+    veg:["cabbage","carrot","bell pepper"], grain:["noodles"], pulse:[] },
+  { n:"Millets Noodles", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"med",
+    veg:["cabbage","carrot","bell pepper"], grain:["millets","noodles"], pulse:[] },
+  { n:"Thai Red Curry + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
+    veg:["bell pepper","broccoli","carrot"], grain:["rice"], pulse:[] },
+  { n:"Thai Green Curry + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
+    veg:["bell pepper","broccoli","carrot"], grain:["rice"], pulse:[] },
+  { n:"Chili Tofu + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"high",
+    veg:["bell pepper","onion"], grain:["rice"], pulse:["tofu"] },
+  { n:"Tofu Stir Fry + Rice", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"high",
+    veg:["broccoli","bell pepper","carrot"], grain:["rice"], pulse:["tofu"] },
+  { n:"Fried Rice w/ Gravy", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
+    veg:["cabbage","carrot","bell pepper"], grain:["rice"], pulse:[] },
+  { n:"Millet Buddha Bowl", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"med",
+    veg:["carrot","cucumber","bell pepper"], grain:["millets"], pulse:["chickpea"] },
+  { n:"Soup - Manchow + Toast", slot:"dinner", cuisine:"Asian", dairy:"none", protein:"low",
+    veg:["cabbage","carrot"], grain:["noodles"], pulse:[] },
+  { n:"Mexican Tacos", slot:"dinner", cuisine:"Mexican", dairy:"light", protein:"med",
+    veg:["bell pepper","onion","tomato"], grain:["tortilla"], pulse:[] },
+  { n:"Tacos", slot:"dinner", cuisine:"Mexican", dairy:"light", protein:"med",
+    veg:["bell pepper","onion","tomato"], grain:["tortilla"], pulse:[] },
+  { n:"Quesadilla", slot:"dinner", cuisine:"Mexican", dairy:"heavy", protein:"med",
+    veg:["bell pepper","onion"], grain:["tortilla"], pulse:[] },
+  { n:"Burrito Bowl", slot:"dinner", cuisine:"Mexican", dairy:"light", protein:"high",
+    veg:["bell pepper","onion","tomato"], grain:["rice"], pulse:[] },
+  { n:"Pasta", slot:"dinner", cuisine:"Italian", dairy:"light", protein:"low",
+    veg:["tomato"], grain:["pasta"], pulse:[] },
+  { n:"Spaghetti", slot:"dinner", cuisine:"Italian", dairy:"light", protein:"low",
+    veg:["tomato"], grain:["pasta"], pulse:[] },
+  { n:"Spaghetti Arrabbiata", slot:"dinner", cuisine:"Italian", dairy:"none", protein:"low",
+    veg:["tomato"], grain:["pasta"], pulse:[] },
+  { n:"Penne with Pesto", slot:"dinner", cuisine:"Italian", dairy:"light", protein:"low",
+    veg:[], grain:["pasta"], pulse:[] },
+  { n:"Mushroom Risotto", slot:"dinner", cuisine:"Italian", dairy:"heavy", protein:"med",
+    veg:["mushroom"], grain:["rice"], pulse:[] },
+];
+
+const SLOTS = [
+  { key:"breakfast", label:"Breakfast" },
+  { key:"tiffin",    label:"Tiffin Box" },
+  { key:"lunch",     label:"Lunch" },
+  { key:"snack",     label:"Snack" },
+  { key:"dinner",    label:"Dinner" },
+];
+
+/* ============================================================
+   STATE + UI WIRING
+   ============================================================ */
+const state = {
+  cuisine: "any",
+  veg: new Set(),
+  grain: new Set(),
+  pulse: new Set(),
+  text: "",
+};
+let current = {}; // slot -> picked item
+
+function titleCase(s) {
+  return s.replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function makeChips(container, options, set) {
+  container.innerHTML = '';
+  let inMore = false;
+  let moreWrap = null;
+  for (const opt of options) {
+    if (opt === "_more_") {
+      inMore = true;
+      moreWrap = document.createElement('span');
+      moreWrap.className = 'hidden-chips';
+      moreWrap.dataset.more = container.id + '-more';
+      container.appendChild(moreWrap);
+      continue;
+    }
+    const chip = document.createElement('div');
+    chip.className = 'chip small';
+    chip.textContent = titleCase(opt);
+    chip.dataset.val = opt;
+    chip.onclick = () => {
+      if (set.has(opt)) { set.delete(opt); chip.classList.remove('on'); }
+      else { set.add(opt); chip.classList.add('on'); }
+    };
+    (inMore ? moreWrap : container).appendChild(chip);
+  }
+}
+
+makeChips(document.getElementById('veg'), VEG_OPTIONS, state.veg);
+makeChips(document.getElementById('grain'), GRAIN_OPTIONS, state.grain);
+makeChips(document.getElementById('pulse'), PULSE_OPTIONS, state.pulse);
+
+document.querySelectorAll('.more-toggle').forEach(t => {
+  t.onclick = () => {
+    const tgt = t.dataset.target;
+    const el = document.querySelector(`[data-more="${tgt}"]`);
+    if (!el) return;
+    el.classList.toggle('show');
+    t.textContent = el.classList.contains('show')
+      ? t.textContent.replace('↓','↑').replace('Show more','Hide')
+      : t.textContent.replace('↑','↓').replace('Hide','Show more');
+  };
+});
+
+document.querySelectorAll('#cuisine .chip').forEach(c => {
+  c.onclick = () => {
+    document.querySelectorAll('#cuisine .chip').forEach(x => x.classList.remove('on'));
+    c.classList.add('on');
+    state.cuisine = c.dataset.c;
+  };
+});
+
+document.querySelectorAll('.text-help').forEach(h => {
+  h.onclick = () => {
+    const ta = document.getElementById('freetext');
+    const add = h.dataset.add;
+    ta.value = (ta.value.trim() ? ta.value.trim() + ", " : "") + add;
+    state.text = ta.value;
+  };
+});
+
+document.getElementById('freetext').oninput = e => state.text = e.target.value;
+
+document.getElementById('reset').onclick = () => {
+  state.cuisine = "any";
+  state.veg.clear(); state.grain.clear(); state.pulse.clear();
+  state.text = "";
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  document.querySelector('#cuisine .chip[data-c="any"]').classList.add('on');
+  document.getElementById('freetext').value = "";
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('soakBanner').classList.remove('show');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+};
+
+/* ============================================================
+   SCORING + PICKING
+   ============================================================ */
+function parseText(t) {
+  const s = t.toLowerCase();
+  return {
+    raw: s,
+    noSoak: /\b(quick|fast|no\s*soak|easy|simple|in a hurry)\b/.test(s),
+    noRice: /\bno\s*rice\b/.test(s),
+    noWheat: /\b(no\s*wheat|no\s*roti|no\s*chapati|gluten)\b/.test(s),
+    light: /\b(light|sick|kid is sick|fever|bland|comfort)\b/.test(s),
+    southIndian: /\b(south|south\s*indian|tamil|udupi|mangalore)\b/.test(s),
+    northIndian: /\b(north\s*indian|punjabi)\b/.test(s),
+    tokens: s.split(/[^a-z]+/).filter(w => w.length > 2),
+  };
+}
+
+// Hard filters = the things the user has *explicitly* told us not to do
+// (text like "no rice", "quick", "light"). Selections like veggies/grains/
+// pulses are NEVER hard filters — they only bias the random pick.
+function passesHard(item, t) {
+  if (t.noSoak && item.soak) return false;
+  if (t.noRice && (item.grain || []).includes("rice")) return false;
+  if (t.noWheat && (item.grain || []).includes("wheat")) return false;
+  if (t.light && item.dairy === "heavy") return false;
+  return true;
+}
+
+// Score = soft preference. Higher score => higher probability, but every
+// item that passes hard filters still has a nonzero chance.
+function score(item, slotKey, t) {
+  let s = 0;
+
+  // Cuisine is an explicit user choice — treat as hard filter for lunch/dinner.
+  if (state.cuisine !== "any" && (slotKey === "lunch" || slotKey === "dinner")) {
+    if (item.cuisine !== state.cuisine) return -1;
+  }
+
+  // Selected ingredients = "any of these" bias. One match is enough.
+  if (state.veg.size) {
+    if ((item.veg || []).some(v => state.veg.has(v))) s += 3;
+  }
+  if (state.grain.size) {
+    if ((item.grain || []).some(g => state.grain.has(g))) s += 3;
+  }
+  if (state.pulse.size) {
+    if ((item.pulse || []).some(p => state.pulse.has(p))) s += 3;
+  }
+
+  // Free-text nudges
+  if (t.tokens.length) {
+    const hay = (item.n + " " + (item.veg||[]).join(" ") + " " + (item.grain||[]).join(" ") + " " + (item.pulse||[]).join(" ")).toLowerCase();
+    for (const tok of t.tokens) if (hay.includes(tok)) s += 1;
+  }
+  if (t.southIndian && /dosa|idly|idli|rasam|sambar|pongal|upma|appam/i.test(item.n)) s += 4;
+  if (t.northIndian && /roti|paratha|paneer|chhole|rajma|kati|dal makhani|biryani/i.test(item.n)) s += 4;
+  if (t.light && /soup|khichdi|rasam|porridge|fruit|salad/i.test(item.n)) s += 2;
+
+  return s;
+}
+
+// Weighted random pick across the entire candidate pool — every item that
+// passes hard filters has a chance. Selections just bend probability.
+function weightedRandom(scored) {
+  if (!scored.length) return null;
+  const weights = scored.map(x => 1 + Math.max(0, x.s) * 1.5);
+  const total = weights.reduce((a, b) => a + b, 0);
+  let r = Math.random() * total;
+  for (let i = 0; i < scored.length; i++) {
+    r -= weights[i];
+    if (r <= 0) return scored[i].item;
+  }
+  return scored[scored.length - 1].item;
+}
+
+function pickForSlot(slotKey, t, excludeName) {
+  const candidates = MENU
+    .filter(m => m.slot === slotKey)
+    .filter(m => passesHard(m, t))
+    .filter(m => !excludeName || m.n !== excludeName)
+    .map(m => ({ item: m, s: score(m, slotKey, t) }))
+    .filter(x => x.s >= 0);
+
+  if (!candidates.length) {
+    // Very loose fallback if everything got filtered out
+    const loose = MENU.filter(m => m.slot === slotKey && (!excludeName || m.n !== excludeName));
+    if (!loose.length) return null;
+    return loose[Math.floor(Math.random() * loose.length)];
+  }
+  return weightedRandom(candidates);
+}
+
+function pickAll() {
+  const t = parseText(state.text);
+  const picks = {};
+  for (const s of SLOTS) picks[s.key] = pickForSlot(s.key, t);
+  return picks;
+}
+
+function rerollSlot(slotKey) {
+  const t = parseText(state.text);
+  const prev = current[slotKey] ? current[slotKey].n : null;
+  current[slotKey] = pickForSlot(slotKey, t, prev);
+  render();
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function render() {
+  const result = document.getElementById('result');
+  const slotsEl = document.getElementById('slots');
+  const banner = document.getElementById('soakBanner');
+  result.style.display = 'block';
+  slotsEl.innerHTML = '';
+
+  const soakItems = [];
+
+  for (const s of SLOTS) {
+    const item = current[s.key];
+    const row = document.createElement('div');
+    row.className = 'slot';
+    if (!item) {
+      row.innerHTML = `
+        <div class="slot-label">${s.label}</div>
+        <div><span class="empty">No match — try loosening filters.</span></div>
+        <div></div>`;
+    } else {
+      const tags = [];
+      tags.push(`<span class="pip">${item.cuisine}</span>`);
+      if (item.dairy === "heavy") tags.push("heavy dairy");
+      else if (item.dairy === "light") tags.push("light dairy");
+      else tags.push("no dairy");
+      tags.push(item.protein === "high" ? "high protein" : item.protein === "med" ? "med protein" : "light protein");
+      const ings = [...(item.veg||[]), ...(item.grain||[]), ...(item.pulse||[])];
+      if (ings.length) tags.push(ings.slice(0,4).join(", "));
+
+      const soakBadge = item.soak ? `<span class="soak">SOAK TONIGHT</span>` : '';
+      if (item.soak) soakItems.push(item.n);
+
+      row.innerHTML = `
+        <div class="slot-label">${s.label}</div>
+        <div>
+          <div class="dish">${item.n}${soakBadge}</div>
+          <div class="meta">${tags.join(" · ")}</div>
+        </div>
+        <button class="reroll" data-slot="${s.key}">↻ swap</button>`;
+    }
+    slotsEl.appendChild(row);
+  }
+
+  slotsEl.querySelectorAll('.reroll').forEach(b => {
+    b.onclick = () => rerollSlot(b.dataset.slot);
+  });
+
+  if (soakItems.length) {
+    banner.innerHTML = "<b>Tonight:</b> soak " + soakItems.join(", ");
+    banner.classList.add('show');
+  } else {
+    banner.classList.remove('show');
+  }
+
+  result.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+document.getElementById('shuffle').onclick = () => {
+  current = pickAll();
+  render();
+};
+</script>
+</body>
+</html>
